@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { ref, onValue } from "firebase/database";
+import Login from "./components/Login";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -11,7 +12,6 @@ function App() {
     try {
       setLoading(true);
       let userRef = ref(db, "/users/" + user);
-
       onValue(userRef, (snapshot) => {
         const data = snapshot.val();
         setUser(data);
@@ -30,7 +30,7 @@ function App() {
     <div className="App">
       {error && <p>Error: {error}</p>}
       {loading && <p>loading...</p>}
-      {!loading && user !== null && <p>{user.name}</p>}
+      {!loading && <Login />}
     </div>
   );
 }
