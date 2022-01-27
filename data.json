@@ -1,72 +1,148 @@
 {
-  "id": "USR1234",
-  "name": "Matt Cowan",
-  "street_name": "19 Union Terrace",
-  "city": "London",
-  "state": "Tennessee",
-  "zip_code": "37027",
-  "country": "United States",
-  "avatar": "",
-  "invoices": [
-    {
-      "id": "XM9141",
-      "service": "Graphic Design",
-      "invoice_date": "2022-01-26T22:12:18+0000",
-      "due_date": "2022-01-31T22:12:18+0000",
-      "status": "Pending",
-      "billing_info": {
-        "client": "Alex Grim",
-        "client_email": "alexgrim@mail.com",
-        "street_name": "84 Church Way",
-        "city": "Bradford",
-        "state": "Tennessee",
-        "zip_code": "37211",
-        "country": "United States"
-      },
-      "line_items": [
+  "users": {
+    "USR1234": {
+      "id": "USR1234",
+      "name": "Matt Cowan",
+      "street_name": "19 Union Terrace",
+      "city": "London",
+      "state": "Tennessee",
+      "zip_code": "37027",
+      "country": "United States",
+      "avatar": "",
+      "invoices": [
         {
-          "name": "Banner Design",
-          "quantity": 1,
-          "price": "156.00",
-          "currency": "USD"
+          "id": "XM9141",
+          "service": "Graphic Design",
+          "invoice_date": "2022-01-26T22:12:18+0000",
+          "due_date": "2022-01-31T22:12:18+0000",
+          "status": "Pending",
+          "billing_info": {
+            "client": "Alex Grim",
+            "client_email": "alexgrim@mail.com",
+            "street_name": "84 Church Way",
+            "city": "Bradford",
+            "state": "Tennessee",
+            "zip_code": "37211",
+            "country": "United States"
+          },
+          "line_items": [
+            {
+              "name": "Banner Design",
+              "quantity": 1,
+              "price": "156.00",
+              "currency": "USD"
+            },
+            {
+              "name": "Email Design",
+              "quantity": 2,
+              "price": "200.00",
+              "currency": "USD"
+            }
+          ]
         },
         {
-          "name": "Email Design",
-          "quantity": 2,
-          "price": "200.00",
-          "currency": "USD"
+          "id": "XM9142",
+          "service": "Graphic Design",
+          "invoice_date": "2022-01-26T22:12:18+0000",
+          "due_date": "2022-01-31T22:12:18+0000",
+          "status": "Pending",
+          "billing_info": {
+            "client": "Alex Grim",
+            "client_email": "alexgrim@mail.com",
+            "street_name": "84 Church Way",
+            "city": "Bradford",
+            "state": "Tennessee",
+            "zip_code": "37211",
+            "country": "United States"
+          },
+          "line_items": [
+            {
+              "name": "Banner Design",
+              "quantity": 1,
+              "price": "156.00",
+              "currency": "USD"
+            },
+            {
+              "name": "Email Design",
+              "quantity": 2,
+              "price": "200.00",
+              "currency": "USD"
+            }
+          ]
         }
       ]
     },
-    {
-      "id": "XM9142",
-      "service": "Graphic Design",
-      "invoice_date": "2022-01-26T22:12:18+0000",
-      "due_date": "2022-01-31T22:12:18+0000",
-      "status": "Pending",
-      "billing_info": {
-        "client": "Alex Grim",
-        "client_email": "alexgrim@mail.com",
-        "street_name": "84 Church Way",
-        "city": "Bradford",
-        "state": "Tennessee",
-        "zip_code": "37211",
-        "country": "United States"
-      },
-      "line_items": [
+    "USR1235": {
+      "id": "USR1235",
+      "name": "Chris Cowan",
+      "street_name": "19 Union Terrace",
+      "city": "London",
+      "state": "Tennessee",
+      "zip_code": "37027",
+      "country": "United States",
+      "avatar": "",
+      "invoices": [
         {
-          "name": "Banner Design",
-          "quantity": 1,
-          "price": "156.00",
-          "currency": "USD"
+          "id": "XM9141",
+          "service": "Graphic Design",
+          "invoice_date": "2022-01-26T22:12:18+0000",
+          "due_date": "2022-01-31T22:12:18+0000",
+          "status": "Pending",
+          "billing_info": {
+            "client": "Alex Grim",
+            "client_email": "alexgrim@mail.com",
+            "street_name": "84 Church Way",
+            "city": "Bradford",
+            "state": "Tennessee",
+            "zip_code": "37211",
+            "country": "United States"
+          },
+          "line_items": [
+            {
+              "name": "Banner Design",
+              "quantity": 1,
+              "price": "156.00",
+              "currency": "USD"
+            },
+            {
+              "name": "Email Design",
+              "quantity": 2,
+              "price": "200.00",
+              "currency": "USD"
+            }
+          ]
         },
         {
-          "name": "Email Design",
-          "quantity": 2,
-          "price": "200.00",
-          "currency": "USD"
+          "id": "XM9142",
+          "service": "Graphic Design",
+          "invoice_date": "2022-01-26T22:12:18+0000",
+          "due_date": "2022-01-31T22:12:18+0000",
+          "status": "Pending",
+          "billing_info": {
+            "client": "Alex Grim",
+            "client_email": "alexgrim@mail.com",
+            "street_name": "84 Church Way",
+            "city": "Bradford",
+            "state": "Tennessee",
+            "zip_code": "37211",
+            "country": "United States"
+          },
+          "line_items": [
+            {
+              "name": "Banner Design",
+              "quantity": 1,
+              "price": "156.00",
+              "currency": "USD"
+            },
+            {
+              "name": "Email Design",
+              "quantity": 2,
+              "price": "200.00",
+              "currency": "USD"
+            }
+          ]
         }
       ]
     }
-  ]
+  }
 }
