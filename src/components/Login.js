@@ -1,11 +1,10 @@
 import React from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-const auth = getAuth();
-const googleProvider = new GoogleAuthProvider();
-
 const handleSignIn = () => {
-  signInWithPopup(auth, googleProvider)
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
@@ -24,7 +23,7 @@ const handleSignIn = () => {
 const Login = () => {
   return (
     <div>
-      <button onClick={() => handleSignIn}>Sign In</button>
+      <button onClick={() => handleSignIn()}>Sign In</button>
     </div>
   );
 };
