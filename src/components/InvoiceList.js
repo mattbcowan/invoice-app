@@ -1,4 +1,5 @@
 import React from "react";
+import { getAuth, signOut } from "firebase/auth";
 
 const convertDateToString = (date) => {
   let dateString = date.toUTCString().slice(4, 16);
@@ -12,9 +13,21 @@ const getTotal = (prices) => {
   return finalPrice.toFixed(2);
 };
 
+const handleSignOut = () => {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      console.log("Signed Out");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 const InvoiceList = ({ data }) => {
   return (
     <div>
+      <button onClick={() => handleSignOut()}>Sign Out</button>
       <ul>
         {data.map((invoice) => (
           <li key={invoice.id}>
