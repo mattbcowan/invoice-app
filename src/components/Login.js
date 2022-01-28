@@ -1,5 +1,7 @@
 import React from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { db } from "../firebase";
+import { onValue, ref, set } from "firebase/database";
 
 const handleSignIn = () => {
   const provider = new GoogleAuthProvider();
@@ -9,6 +11,19 @@ const handleSignIn = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
+      const checkForUserInDatabase = ref(db, `users/${user.uid}`);
+      onValue(checkForUserInDatabase, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) {
+          set(ref(db, `users/${user.uid}`), {
+            id: user.uid,
+            name: user.displayName,
+            avatar: user.photoURL,
+            email: user.email,
+            invoices: [],
+          });
+        }
+      });
       console.log(user);
       return user;
     })
