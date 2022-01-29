@@ -6,15 +6,20 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import SignOut from "./components/SignOut";
 
 function App() {
-  const auth = getAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+      if (!user) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
+      setLoading(false);
     });
-    setLoading(false);
   }, []);
 
   const PrivateRoute = ({ children }) => {

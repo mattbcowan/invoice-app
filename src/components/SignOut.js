@@ -3,13 +3,9 @@ import React from "react";
 
 const handleSignOut = () => {
   const auth = getAuth();
-  signOut(auth)
-    .then(() => {
-      console.log("Signed Out");
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  signOut(auth).catch((error) => {
+    console.error(error);
+  });
 };
 
 const SignOut = () => {
