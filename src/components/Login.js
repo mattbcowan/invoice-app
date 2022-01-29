@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  browserLocalPersistence,
-  browserSessionPersistence,
-  getAuth,
-  GoogleAuthProvider,
-  setPersistence,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db } from "../firebase";
 import { onValue, ref, set } from "firebase/database";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const provider = new GoogleAuthProvider();
