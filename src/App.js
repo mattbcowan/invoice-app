@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import InvoiceList from "./components/InvoiceList";
 import Login from "./components/Login";
 import SignOut from "./components/SignOut";
+import Modal from "./components/Modal";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const modal = useRef(null);
 
   useEffect(() => {
     setLoading(true);
@@ -30,20 +32,24 @@ function App() {
     return <p>Loading...</p>;
   } else {
     return (
-      <div className="App">
-        <SignOut />
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route
-            path="/invoices"
-            element={
-              <PrivateRoute>
-                <InvoiceList />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </div>
+      <>
+        <div className="App">
+          <SignOut />
+          <button onClick={() => modal.current.open()}>Open Modal</button>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="/invoices"
+              element={
+                <PrivateRoute>
+                  <InvoiceList />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+        <Modal ref={modal}>Hello</Modal>
+      </>
     );
   }
 }
