@@ -5,6 +5,7 @@ import InvoiceList from "./components/InvoiceList";
 import Login from "./components/Login";
 import SignOut from "./components/SignOut";
 import Modal from "./components/Modal";
+import InvoiceForm from "./components/InvoiceForm";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,7 +49,9 @@ function App() {
             />
           </Routes>
         </div>
-        <Modal ref={modal}>Hello</Modal>
+        <Modal ref={modal}>
+          <InvoiceForm />
+        </Modal>
       </>
     );
   }
