@@ -36,8 +36,8 @@ const LineItems = ({ control, register, setValue }) => {
                 <label>Total: </label>
                 <LineItemTotal
                   control={control}
-                  setValue={setValue}
                   index={index}
+                  setValue={setValue}
                 />
                 <button type="button" onClick={() => remove(index)}>
                   Delete

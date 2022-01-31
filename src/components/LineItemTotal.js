@@ -1,4 +1,3 @@
-import React from "react";
 import { useWatch } from "react-hook-form";
 
 const totalCal = (results) => {
@@ -9,12 +8,13 @@ const totalCal = (results) => {
   return totalValue;
 };
 
-export const LineItemTotal = ({ control, index }) => {
+export const LineItemTotal = ({ control, index, setValue }) => {
   const results = useWatch({
     control,
     name: [`line_items.${index}.quantity`, `line_items.${index}.price`],
   });
   const output = totalCal(results);
+  setValue(`line_items.${index}.total`, output);
 
   return output;
 };

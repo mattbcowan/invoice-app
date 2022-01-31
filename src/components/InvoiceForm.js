@@ -2,7 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { db } from "../firebase";
 import LineItems from "./LineItems";
+import { get, ref, update } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const schema = yup
   .object({
@@ -29,6 +32,8 @@ const schema = yup
   .required();
 
 const InvoiceForm = () => {
+  const auth = getAuth();
+  const userId = auth.currentUser.uid;
   const {
     control,
     register,
@@ -41,12 +46,45 @@ const InvoiceForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const saveData = (data) => {
-    console.log(data);
+  const padLeadingZeros = (num, size) => {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
+  };
+
+  const createInvoiceNumber = async () => {
+    let invoiceNumber = 1;
+    const invoicesRef = ref(db, `users/${userId}/invoices`);
+    await get(invoicesRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const numberOfInvoices = Object.keys(snapshot.val()).length;
+          return (invoiceNumber = numberOfInvoices + 1);
+        } else {
+          return (invoiceNumber = 1);
+        }
+      })
+      .catch((err) => console.error(err));
+
+    invoiceNumber = `XM${padLeadingZeros(invoiceNumber, 4)}`;
+    return invoiceNumber;
+  };
+
+  const saveData = async (data) => {
+    await createInvoiceNumber().then((number) => {
+      console.log(number);
+      let invoice = {};
+      invoice[number] = data;
+      update(ref(db, `users/${userId}/invoices/`), invoice);
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit((data) => saveData(data))}>
+    <form
+      onSubmit={handleSubmit((data) => {
+        saveData(data);
+      })}
+    >
       <h1>New Invoice</h1>
       <fieldset>
         <legend>Bill From</legend>
