@@ -53,8 +53,8 @@ const InvoiceForm = () => {
   };
 
   const createInvoiceNumber = async () => {
-    let invoiceNumber = 1;
     const invoicesRef = ref(db, `users/${userId}/invoices`);
+    let invoiceNumber = 1;
     await get(invoicesRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -72,7 +72,6 @@ const InvoiceForm = () => {
 
   const saveData = async (data) => {
     await createInvoiceNumber().then((number) => {
-      console.log(number);
       let invoice = {};
       invoice[number] = data;
       update(ref(db, `users/${userId}/invoices/`), invoice);
