@@ -24,7 +24,9 @@ const InvoiceList = () => {
     const userRef = ref(db, `users/${auth.currentUser.uid}/invoices`);
     onValue(userRef, (snapshot) => {
       const data = snapshot.val();
-      setInvoices(Object.entries(data));
+      if (data !== null) {
+        setInvoices(Object.entries(data));
+      }
       setLoading(false);
     });
   }, []);
@@ -33,6 +35,7 @@ const InvoiceList = () => {
     <div>
       <h2>Invoices</h2>
       {loading && <p>Loading...</p>}
+      {!invoices && <p>No Invoices!</p>}
       {invoices && (
         <ul>
           {invoices.map((invoice) => (
