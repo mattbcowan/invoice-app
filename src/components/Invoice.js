@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
-const Invoice = () => {
+const Invoice = ({ modal }) => {
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
   let { invoiceId } = useParams();
@@ -16,7 +16,6 @@ const Invoice = () => {
     );
     onValue(userRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       setInvoice(data);
       setLoading(false);
     });
@@ -37,6 +36,7 @@ const Invoice = () => {
             <li>{invoice.bill_from_info.zip_code}</li>
             <li>{invoice.bill_from_info.country}</li>
           </ul>
+          <button onClick={() => modal.current.open()}>Edit</button>
         </div>
       )}
     </div>
