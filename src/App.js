@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import InvoiceList from "./components/InvoiceList";
 import Login from "./components/Login";
@@ -12,6 +12,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const modal = useRef(null);
+  let navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +38,7 @@ function App() {
       <>
         <div className="App">
           <SignOut />
+          <button onClick={() => navigate(-1)}>Back</button>
           <button onClick={() => modal.current.open()}>Open Modal</button>
           <Routes>
             <Route path="/" element={<Login />} />
