@@ -1,6 +1,6 @@
 import React from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { onValue, ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,6 @@ const Login = () => {
   };
 
   const handleSignIn = async () => {
-    const auth = getAuth();
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;

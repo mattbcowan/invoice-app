@@ -1,8 +1,5 @@
-import { getAuth } from "firebase/auth";
+import { db, auth } from "./firebase";
 import { get, ref } from "firebase/database";
-import { db } from "./firebase";
-const auth = getAuth();
-const userId = auth.currentUser.uid;
 
 const padLeadingZeros = (num, size) => {
   var s = num + "";
@@ -11,7 +8,7 @@ const padLeadingZeros = (num, size) => {
 };
 
 export const createInvoiceNumber = async () => {
-  const invoicesRef = ref(db, `users/${userId}/invoices`);
+  const invoicesRef = ref(db, `users/${auth.currentUser.uid}/invoices`);
   let invoiceNumber = 1;
   await get(invoicesRef)
     .then((snapshot) => {

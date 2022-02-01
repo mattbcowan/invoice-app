@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import SignOut from "./components/SignOut";
 import Modal from "./components/Modal";
 import InvoiceForm from "./components/InvoiceForm";
+import Invoice from "./components/Invoice";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,6 +45,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <InvoiceList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/invoices/:invoiceId"
+              element={
+                <PrivateRoute>
+                  <Invoice />
                 </PrivateRoute>
               }
             />

@@ -1,6 +1,5 @@
+import { db, auth } from "../firebase";
 import React, { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
 const convertDateToString = (date) => {
@@ -21,7 +20,6 @@ const InvoiceList = () => {
 
   useEffect(() => {
     setLoading(true);
-    const auth = getAuth();
     const userRef = ref(db, `users/${auth.currentUser.uid}/invoices`);
     onValue(userRef, (snapshot) => {
       const data = snapshot.val();
