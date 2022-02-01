@@ -1,6 +1,7 @@
 import { db, auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
+import { Link } from "react-router-dom";
 
 const convertDateToString = (date) => {
   let dateString = date.toUTCString().slice(4, 16);
@@ -36,7 +37,9 @@ const InvoiceList = () => {
         <ul>
           {invoices.map((invoice) => (
             <li key={invoice[0]}>
-              <div>{invoice[0]}</div>
+              <div>
+                <Link to={invoice[0]}>{invoice[0]}</Link>
+              </div>
               <div>
                 Due:{" "}
                 {convertDateToString(
