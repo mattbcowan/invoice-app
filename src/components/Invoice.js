@@ -9,7 +9,7 @@ const Invoice = () => {
   let { invoiceId } = useParams();
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const userRef = ref(
       db,
       `users/${auth.currentUser.uid}/invoices/${invoiceId}`
