@@ -59,7 +59,7 @@ const InvoiceForm = () => {
             saveInvoice(data, isAddMode, invoiceId);
           })}
         >
-          {isAddMode ? <h1>New Invoice</h1> : <h1>{invoiceId}</h1>}
+          {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
           <fieldset>
             <legend>Bill From</legend>
             <label>Street Address</label>

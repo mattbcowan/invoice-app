@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { auth, db } from "../firebase";
+import { useNavigate, useParams } from "react-router-dom";
+import { auth, db, deleteInvoice } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
 const Invoice = ({ modal }) => {
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
   let { invoiceId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +38,13 @@ const Invoice = ({ modal }) => {
             <li>{invoice.bill_from_info.country}</li>
           </ul>
           <button onClick={() => modal.current.open()}>Edit</button>
+          <button
+            onClick={() =>
+              deleteInvoice(invoiceId).then(() => navigate("/invoices"))
+            }
+          >
+            Delete
+          </button>
         </div>
       )}
     </div>
