@@ -15,7 +15,7 @@ const getTotal = (prices) => {
   return finalPrice;
 };
 
-const InvoiceList = () => {
+const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,9 +31,26 @@ const InvoiceList = () => {
     });
   }, []);
 
+  const countInvoices = (invoices) => {
+    if (invoices === null) {
+      return "No invoices";
+    }
+    const invoiceQty = Object.keys(invoices).length;
+    if (invoiceQty === 1) {
+      return "1 Invoice";
+    } else {
+      return `${invoiceQty} Invoices`;
+    }
+  };
+
   return (
     <div>
-      <h2>Invoices</h2>
+      <div>
+        <h2>Invoices</h2>
+        <div>{countInvoices(invoices)}</div>
+        <p>Filter</p>
+        <button onClick={() => modal.current.open()}>New Invoice</button>
+      </div>
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
       {invoices && (

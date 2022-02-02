@@ -39,14 +39,13 @@ function App() {
         <div className="App">
           <SignOut />
           <button onClick={() => navigate(-1)}>Back</button>
-          <button onClick={() => modal.current.open()}>Open Modal</button>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route
               path="/invoices"
               element={
                 <PrivateRoute>
-                  <InvoiceList />
+                  <InvoiceList modal={modal} />
                 </PrivateRoute>
               }
             />
