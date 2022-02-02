@@ -2,6 +2,7 @@ import { db, auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import { Link } from "react-router-dom";
+import Filter from "./Filter";
 
 const convertDateToString = (date) => {
   let dateString = date.toUTCString().slice(4, 16);
@@ -18,6 +19,20 @@ const getTotal = (prices) => {
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [filterStatus, setFilterStatus] = useState([
+    {
+      value: "draft",
+      label: "Draft",
+    },
+    {
+      value: "pending",
+      label: "Pending",
+    },
+    {
+      value: "paid",
+      label: "Paid",
+    },
+  ]);
 
   useEffect(() => {
     setLoading(true);
@@ -48,29 +63,37 @@ const InvoiceList = ({ modal }) => {
       <div>
         <h2>Invoices</h2>
         <div>{countInvoices(invoices)}</div>
-        <p>Filter</p>
+        <Filter filter={filterStatus} setFilter={setFilterStatus} />
         <button onClick={() => modal.current.open()}>New Invoice</button>
       </div>
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
       {invoices && (
         <ul>
-          {invoices.map((invoice) => (
-            <li key={invoice[0]}>
-              <div>
-                <Link to={invoice[0]}>{invoice[0]}</Link>
-              </div>
-              <div>
-                Due:{" "}
-                {convertDateToString(
-                  new Date(invoice[1].bill_to_info.invoice_date)
-                )}
-              </div>
-              <div>{invoice[1].bill_to_info.client_name}</div>
-              <div>Total: ${getTotal(invoice[1].line_items)}</div>
-              <div>{invoice[1].status}</div>
-            </li>
-          ))}
+          {invoices
+            .filter((invoice) => {
+              console.log(filterStatus);
+              let filters = filterStatus.map((value) => {
+                return value.label;
+              });
+              return filters.includes(invoice[1].status);
+            })
+            .map((invoice) => (
+              <li key={invoice[0]}>
+                <div>
+                  <Link to={invoice[0]}>{invoice[0]}</Link>
+                </div>
+                <div>
+                  Due:{" "}
+                  {convertDateToString(
+                    new Date(invoice[1].bill_to_info.invoice_date)
+                  )}
+                </div>
+                <div>{invoice[1].bill_to_info.client_name}</div>
+                <div>Total: ${getTotal(invoice[1].line_items)}</div>
+                <div>{invoice[1].status}</div>
+              </li>
+            ))}
         </ul>
       )}
     </div>
