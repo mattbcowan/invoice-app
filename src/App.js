@@ -58,7 +58,7 @@ function App() {
           </Routes>
         </div>
         <Modal ref={modal}>
-          <InvoiceForm />
+          <InvoiceForm modal={modal} />
         </Modal>
       </>
     );

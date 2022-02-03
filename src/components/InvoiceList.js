@@ -72,7 +72,6 @@ const InvoiceList = ({ modal }) => {
         <ul>
           {invoices
             .filter((invoice) => {
-              console.log(filterStatus);
               let filters = filterStatus.map((value) => {
                 return value.label;
               });
