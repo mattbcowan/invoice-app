@@ -1,20 +1,9 @@
 import { db, auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
-import { Link } from "react-router-dom";
 import Filter from "./Filter";
-
-const convertDateToString = (date) => {
-  let dateString = date.toUTCString().slice(4, 16);
-  return dateString;
-};
-
-const getTotal = (prices) => {
-  let allPrices = [];
-  prices.map((lineItem) => allPrices.push(lineItem.price * lineItem.quantity));
-  let finalPrice = allPrices.reduce((a, b) => parseInt(a) + parseInt(b));
-  return finalPrice;
-};
+import InvoiceListCard from "./InvoiceListCard";
+import styled from "styled-components";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
@@ -69,7 +58,7 @@ const InvoiceList = ({ modal }) => {
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
       {invoices && (
-        <ul>
+        <StyledUl>
           {invoices
             .filter((invoice) => {
               let filters = filterStatus.map((value) => {
@@ -79,24 +68,19 @@ const InvoiceList = ({ modal }) => {
             })
             .map((invoice) => (
               <li key={invoice[0]}>
-                <div>
-                  <Link to={invoice[0]}>{invoice[0]}</Link>
-                </div>
-                <div>
-                  Due:{" "}
-                  {convertDateToString(
-                    new Date(invoice[1].bill_to_info.invoice_date)
-                  )}
-                </div>
-                <div>{invoice[1].bill_to_info.client_name}</div>
-                <div>Total: ${getTotal(invoice[1].line_items)}</div>
-                <div>{invoice[1].status}</div>
+                <InvoiceListCard invoice={invoice} />
               </li>
             ))}
-        </ul>
+        </StyledUl>
       )}
     </div>
   );
 };
+
+const StyledUl = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
 
 export default InvoiceList;

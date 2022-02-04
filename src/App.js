@@ -7,6 +7,9 @@ import SignOut from "./components/SignOut";
 import Modal from "./components/Modal";
 import InvoiceForm from "./components/InvoiceForm";
 import Invoice from "./components/Invoice";
+import ErrorBoundary from "./components/ErrorBoundary";
+import styled from "styled-components";
+import GlobalStyle from "./theme/globalStyles";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,35 +37,49 @@ function App() {
     return <p>Loading...</p>;
   } else {
     return (
-      <>
-        <div className="App">
+      <ErrorBoundary>
+        <GlobalStyle />
+        <AppContainer>
           <SignOut />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route
-              path="/invoices"
-              element={
-                <PrivateRoute>
-                  <InvoiceList modal={modal} />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/invoices/:invoiceId"
-              element={
-                <PrivateRoute>
-                  <Invoice modal={modal} />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </div>
+          <Wrapper>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route
+                path="/invoices"
+                element={
+                  <PrivateRoute>
+                    <InvoiceList modal={modal} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/invoices/:invoiceId"
+                element={
+                  <PrivateRoute>
+                    <Invoice modal={modal} />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </Wrapper>
+        </AppContainer>
         <Modal ref={modal}>
           <InvoiceForm modal={modal} />
         </Modal>
-      </>
+      </ErrorBoundary>
     );
   }
 }
+
+const AppContainer = styled.div`
+  background-color: #f8f8f8;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+`;
+
+const Wrapper = styled.div`
+  margin: 2em;
+`;
 
 export default App;
