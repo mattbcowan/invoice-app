@@ -4,6 +4,7 @@ import { onValue, ref } from "firebase/database";
 import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
+import Button from "./Button";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
@@ -53,7 +54,7 @@ const InvoiceList = ({ modal }) => {
         <h2>Invoices</h2>
         <div>{countInvoices(invoices)}</div>
         <Filter filter={filterStatus} setFilter={setFilterStatus} />
-        <button onClick={() => modal.current.open()}>New Invoice</button>
+        <Button onClick={() => modal.current.open()}>New</Button>
       </div>
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
