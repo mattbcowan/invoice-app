@@ -4,7 +4,9 @@ import { onValue, ref } from "firebase/database";
 import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
+import { AiFillPlusCircle } from "react-icons/ai";
 import Button from "../Button";
+import { IconContext } from "react-icons";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
@@ -50,12 +52,27 @@ const InvoiceList = ({ modal }) => {
 
   return (
     <div>
-      <div>
-        <h2>Invoices</h2>
-        <div>{countInvoices(invoices)}</div>
-        <Filter filter={filterStatus} setFilter={setFilterStatus} />
-        <Button onClick={() => modal.current.open()}>New</Button>
-      </div>
+      <OptionsBar>
+        <div>
+          <Header>Invoices</Header>
+          <div>{countInvoices(invoices)}</div>
+        </div>
+        <ButtonsContainer>
+          <Filter filter={filterStatus} setFilter={setFilterStatus} />
+          <Button onClick={() => modal.current.open()}>
+            <IconContext.Provider
+              value={{
+                color: "#ffffff",
+                size: "2.5em",
+                style: { marginRight: "0.4em" },
+              }}
+            >
+              <AiFillPlusCircle />
+            </IconContext.Provider>
+            New
+          </Button>
+        </ButtonsContainer>
+      </OptionsBar>
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
       {invoices && (
@@ -82,6 +99,22 @@ const StyledUl = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+`;
+
+const OptionsBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2em;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Header = styled.h2`
+  margin-bottom: 0.25em;
 `;
 
 export default InvoiceList;
