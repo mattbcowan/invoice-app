@@ -1,10 +1,10 @@
-import { db, auth } from "../firebase";
+import { db, auth } from "../../firebase";
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
-import Button from "./Button";
+import Button from "../Button";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);

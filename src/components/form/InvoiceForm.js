@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { auth, db, saveInvoice } from "../firebase";
+import { auth, db, saveInvoice } from "../../firebase";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LineItems from "./LineItems";
-import { invoiceSchema } from "../schema";
+import { invoiceSchema } from "../../schema";
 import { useLocation } from "react-router-dom";
 import { get, ref } from "firebase/database";
-import DatePicker from "react-date-picker";
+import FormInput from "./FormInput";
+import inputList from "./inputList.json";
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
   const invoiceId = location.pathname.slice(10, 16);
   const [loading, setLoading] = useState(null);
-  const [date, setDate] = useState(new Date());
   const isAddMode = !invoiceId;
   const {
     control,
@@ -64,47 +64,35 @@ const InvoiceForm = ({ modal }) => {
           {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
           <fieldset>
             <legend>Bill From</legend>
-            <label>Street Address</label>
-            <input {...register("bill_from_info.street_name")} />
-            <label>City</label>
-            <input {...register("bill_from_info.city")} />
-            <label>State</label>
-            <input {...register("bill_from_info.state")} />
-            <label>Zip Code</label>
-            <input {...register("bill_from_info.zip_code")} />
-            <label>Country</label>
-            <input {...register("bill_from_info.country")} />
+            {inputList.bill_from.map((listItem) => {
+              return (
+                <FormInput
+                  key={listItem.label}
+                  register={register}
+                  label={listItem.label}
+                  path={listItem.path}
+                  type={listItem.type}
+                  options={listItem.options && listItem.options}
+                  defaultValue={listItem.defaultValue && listItem.defaultValue}
+                />
+              );
+            })}
           </fieldset>
           <fieldset>
             <legend>Bill To</legend>
-            <label>Client's Name</label>
-            <input {...register("bill_to_info.client_name")} />
-            <label>Client's Email</label>
-            <input type="email" {...register("bill_to_info.client_email")} />
-            <label>Street Address</label>
-            <input {...register("bill_to_info.street_name")} />
-            <label>City</label>
-            <input {...register("bill_to_info.city")} />
-            <label>State</label>
-            <input {...register("bill_to_info.state")} />
-            <label>Zip Code</label>
-            <input {...register("bill_to_info.zip_code")} />
-            <label>Country</label>
-            <input {...register("bill_to_info.country")} />
-            <label>Invoice Date</label>
-            <input type="date" {...register("bill_to_info.invoice_date")} />
-            <label>Payment Terms</label>
-            <select
-              {...register("bill_to_info.payment_terms")}
-              defaultValue={"net-30"}
-            >
-              <option value="net-01">Net 1 Day</option>
-              <option value="net-07">Net 7 Days</option>
-              <option value="net-14">Net 14 Days</option>
-              <option value="net-30">Net 30 Days</option>
-            </select>
-            <label>Project Description</label>
-            <input {...register("bill_to_info.project_description")} />
+            {inputList.bill_to.map((listItem) => {
+              return (
+                <FormInput
+                  key={listItem.label}
+                  register={register}
+                  label={listItem.label}
+                  path={listItem.path}
+                  type={listItem.type}
+                  options={listItem.options && listItem.options}
+                  defaultValue={listItem.defaultValue && listItem.defaultValue}
+                />
+              );
+            })}
           </fieldset>
           <LineItems
             {...{ control, watch, register, getValues, setValue, errors }}
@@ -122,7 +110,11 @@ const InvoiceForm = ({ modal }) => {
                   value="Save as Draft"
                   onClick={setValue("status", "Draft")}
                 />
-                <input type="submit" value="Save & Send" />
+                <input
+                  type="submit"
+                  value="Save & Send"
+                  onClick={setValue("status", "Pending")}
+                />
               </div>
             ) : (
               <div>

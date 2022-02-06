@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import InvoiceList from "./components/InvoiceList";
+import InvoiceList from "./components/invoiceList/InvoiceList";
 import Login from "./components/Login";
 import SignOut from "./components/SignOut";
 import Modal from "./components/Modal";
-import InvoiceForm from "./components/InvoiceForm";
-import Invoice from "./components/Invoice";
+import InvoiceForm from "./components/form/InvoiceForm";
+import Invoice from "./components/invoice/Invoice";
 import ErrorBoundary from "./components/ErrorBoundary";
 import styled from "styled-components";
 import GlobalStyle from "./theme/globalStyles";

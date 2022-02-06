@@ -1,0 +1,56 @@
+{
+  "bill_from": [
+    {
+      "label": "Street Address",
+      "path": "bill_from_info.street_name",
+      "type": "text"
+    },
+    { "label": "City", "path": "bill_from_info.city", "type": "text" },
+    { "label": "State", "path": "bill_from_info.state", "type": "text" },
+    { "label": "Zip Code", "path": "bill_from_info.zip_code", "type": "text" },
+    { "label": "Country", "path": "bill_from_info.country", "type": "text" }
+  ],
+  "bill_to": [
+    {
+      "label": "Client's Name",
+      "path": "bill_to_info.client_name",
+      "type": "text"
+    },
+    {
+      "label": "Client's Email",
+      "path": "bill_to_info.client_email",
+      "type": "email"
+    },
+    {
+      "label": "Street Address",
+      "path": "bill_to_info.street_name",
+      "type": "text"
+    },
+    { "label": "City", "path": "bill_to_info.city", "type": "text" },
+    { "label": "State", "path": "bill_to_info.state", "type": "text" },
+    { "label": "Zip Code", "path": "bill_to_info.zip_code", "type": "text" },
+    { "label": "Country", "path": "bill_to_info.country", "type": "text" },
+    {
+      "label": "Invoice Date",
+      "path": "bill_to_info.invoice_date",
+      "type": "date"
+    },
+    {
+      "label": "Payment Terms",
+      "path": "bill_to_info.payment_terms",
+      "type": "select",
+      "options": [
+        { "value": "net-01", "label": "Net 1 Day" },
+        { "value": "net-07", "label": "Net 7 Days" },
+        { "value": "net-14", "label": "Net 14 Days" },
+        { "value": "net-30", "label": "Net 30 Days" }
+      ],
+      "defaultValue": "net-30"
+    },
+    {
+      "label": "Project Description",
+      "path": "bill_to_info.project_description",
+      "type": "text"
+    }
+  ]
+}

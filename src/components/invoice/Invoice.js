@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth, db, deleteInvoice, markAsPaid } from "../firebase";
+import { auth, db, deleteInvoice, markAsPaid } from "../../firebase";
 import { onValue, ref } from "firebase/database";
 
 const Invoice = ({ modal }) => {
