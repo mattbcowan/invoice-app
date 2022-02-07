@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth, db, deleteInvoice, markAsPaid } from "../../firebase";
 import { onValue, ref } from "firebase/database";
+import Container from "../Container";
+import StatusTag from "../StatusTag";
+import styled from "styled-components";
+import { Button } from "../Button";
 
 const Invoice = ({ modal }) => {
   const [invoice, setInvoice] = useState(null);
@@ -37,87 +41,123 @@ const Invoice = ({ modal }) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       {loading && <p>Loading...</p>}
       {invoice && (
         <div>
           <button onClick={() => navigate(-1)}>Go back</button>
           <div>
-            <div>{invoice.status}</div>
-            <div>{invoiceId}</div>
-            <div>{invoice.bill_to_info.project_description}</div>
-            <ul>
-              <li>{invoice.bill_from_info.street_name}</li>
-              <li>{invoice.bill_from_info.city}</li>
-              <li>{invoice.bill_from_info.state}</li>
-              <li>{invoice.bill_from_info.zip_code}</li>
-              <li>{invoice.bill_from_info.country}</li>
-            </ul>
-            <div>
-              <div>Invoice Date</div>
-              <div>{invoice.bill_to_info.invoice_date}</div>
-            </div>
-            <div>
-              <div>Payment Due</div>
-              <div>{invoice.bill_to_info.invoice_date}</div>
-            </div>
-            <div>
-              <div>Sent to</div>
-              <div>{invoice.bill_to_info.client_email}</div>
-            </div>
-            <div>
-              <div>Bill To</div>
-              <div>{invoice.bill_to_info.client_name}</div>
+            <Container>
+              <StatusWrapper>
+                <div>Status</div>
+                <StatusTag status={invoice.status} />
+              </StatusWrapper>
+            </Container>
+            <Container>
+              <div>{invoiceId}</div>
+              <div>{invoice.bill_to_info.project_description}</div>
               <ul>
-                <li>{invoice.bill_to_info.street_name}</li>
-                <li>{invoice.bill_to_info.city}</li>
-                <li>{invoice.bill_to_info.state}</li>
-                <li>{invoice.bill_to_info.zip_code}</li>
-                <li>{invoice.bill_to_info.country}</li>
+                <li>{invoice.bill_from_info.street_name}</li>
+                <li>{invoice.bill_from_info.city}</li>
+                <li>{invoice.bill_from_info.state}</li>
+                <li>{invoice.bill_from_info.zip_code}</li>
+                <li>{invoice.bill_from_info.country}</li>
               </ul>
-            </div>
-            <div>
-              {invoice.line_items &&
-                invoice.line_items.map((item) => {
-                  return (
-                    <div key={item.name}>
-                      <div>{item.name}</div>
-                      <div>
-                        {item.quantity} x {item.price}
+              <div>
+                <div>Invoice Date</div>
+                <div>{invoice.bill_to_info.invoice_date}</div>
+              </div>
+              <div>
+                <div>Payment Due</div>
+                <div>{invoice.bill_to_info.invoice_date}</div>
+              </div>
+              <div>
+                <div>Sent to</div>
+                <div>{invoice.bill_to_info.client_email}</div>
+              </div>
+              <div>
+                <div>Bill To</div>
+                <div>{invoice.bill_to_info.client_name}</div>
+                <ul>
+                  <li>{invoice.bill_to_info.street_name}</li>
+                  <li>{invoice.bill_to_info.city}</li>
+                  <li>{invoice.bill_to_info.state}</li>
+                  <li>{invoice.bill_to_info.zip_code}</li>
+                  <li>{invoice.bill_to_info.country}</li>
+                </ul>
+              </div>
+              <div>
+                {invoice.line_items &&
+                  invoice.line_items.map((item) => {
+                    return (
+                      <div key={item.name}>
+                        <div>{item.name}</div>
+                        <div>
+                          {item.quantity} x {item.price}
+                        </div>
+                        <div>{item.total}</div>
                       </div>
-                      <div>{item.total}</div>
-                    </div>
-                  );
-                })}
-            </div>
-            <div>
-              <div>Grand Total</div>
-              <div>{calculateTotal(invoice.line_items)}</div>
-            </div>
+                    );
+                  })}
+              </div>
+              <div>
+                <div>Grand Total</div>
+                <div>{calculateTotal(invoice.line_items)}</div>
+              </div>
+            </Container>
           </div>
-          <button onClick={() => modal.current.open()}>Edit</button>
-          <button
-            onClick={() =>
-              deleteInvoice(invoiceId).then(() => navigate("/invoices"))
-            }
-          >
-            Delete
-          </button>
-          {invoice.status === "Paid" ? (
-            <button disabled>Mark As Paid</button>
-          ) : (
-            <button
-              onClick={() => {
-                handlePaid();
-              }}
+          <ButtonContainer>
+            <Button
+              backgroundColor="#F9FAFE"
+              color="#7E88C3"
+              onClick={() => modal.current.open()}
             >
-              Mark As Paid
-            </button>
-          )}
+              Edit
+            </Button>
+            <Button
+              backgroundColor="#EC5757"
+              onClick={() =>
+                deleteInvoice(invoiceId).then(() => navigate("/invoices"))
+              }
+            >
+              Delete
+            </Button>
+            {invoice.status === "Paid" ? (
+              <Button disabled>Mark As Paid</Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  handlePaid();
+                }}
+              >
+                Mark As Paid
+              </Button>
+            )}
+          </ButtonContainer>
         </div>
       )}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  color: #7e88c3;
+`;
+
+const StatusWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 2em;
+`;
 
 export default Invoice;

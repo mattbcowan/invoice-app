@@ -78,8 +78,6 @@ const AppContainer = styled.div`
   padding: 0;
 `;
 
-const Wrapper = styled.div`
-  margin: 2em;
-`;
+const Wrapper = styled.div``;
 
 export default App;

@@ -5,7 +5,7 @@ import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Button from "../Button";
+import { Button, IconButton } from "../Button";
 import { IconContext } from "react-icons";
 
 const InvoiceList = ({ modal }) => {
@@ -59,7 +59,7 @@ const InvoiceList = ({ modal }) => {
         </div>
         <ButtonsContainer>
           <Filter filter={filterStatus} setFilter={setFilterStatus} />
-          <Button onClick={() => modal.current.open()}>
+          <IconButton onClick={() => modal.current.open()}>
             <IconContext.Provider
               value={{
                 color: "#ffffff",
@@ -70,7 +70,7 @@ const InvoiceList = ({ modal }) => {
               <AiFillPlusCircle />
             </IconContext.Provider>
             New
-          </Button>
+          </IconButton>
         </ButtonsContainer>
       </OptionsBar>
       {loading && <p>Loading...</p>}
@@ -103,13 +103,16 @@ const StyledUl = styled.ul`
 
 const OptionsBar = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2em;
+  margin: 2em;
 `;
 
 const ButtonsContainer = styled.div`
   display: flex;
+  flex: 1;
+  justify-content: flex-end;
   align-items: center;
 `;
 

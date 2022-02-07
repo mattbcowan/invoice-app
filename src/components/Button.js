@@ -1,13 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({ onClick, children }) => {
-  return <Wrapper onClick={onClick}>{children}</Wrapper>;
+export const Button = ({ onClick, children, backgroundColor, color }) => {
+  return (
+    <Wrapper backgroundColor={backgroundColor} color={color} onClick={onClick}>
+      {children}
+    </Wrapper>
+  );
+};
+
+export const IconButton = ({ onClick, children, backgroundColor, color }) => {
+  return (
+    <WrapperIcon
+      backgroundColor={backgroundColor}
+      color={color}
+      onClick={onClick}
+    >
+      {children}
+    </WrapperIcon>
+  );
 };
 
 const Wrapper = styled.button`
-  background-color: #7c5dfa;
-  color: #ffffff;
+  background-color: ${(props) => props.backgroundColor || "#7c5dfa"};
+  color: ${(props) => props.color || "#ffffff"};
+  font-size: 15px;
+  padding: 1em 1.5em;
+  border-radius: 5em;
+  border: none;
+  display: flex;
+  align-items: center;
+`;
+
+const WrapperIcon = styled.button`
+  background-color: ${(props) => props.backgroundColor || "#7c5dfa"};
+  color: ${(props) => props.color || "#ffffff"};
   font-size: 15px;
   padding: 0.25em;
   padding-right: 1em;
@@ -16,5 +43,3 @@ const Wrapper = styled.button`
   display: flex;
   align-items: center;
 `;
-
-export default Button;
