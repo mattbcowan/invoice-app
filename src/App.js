@@ -73,7 +73,7 @@ function App() {
 
 const AppContainer = styled.div`
   background-color: #f8f8f8;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
 `;

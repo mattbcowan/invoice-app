@@ -30,6 +30,7 @@ const Wrapper = styled.button`
   border: none;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const WrapperIcon = styled.button`
@@ -42,4 +43,5 @@ const WrapperIcon = styled.button`
   border: none;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
