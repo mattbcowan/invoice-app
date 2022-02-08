@@ -5,7 +5,7 @@ import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, IconButton } from "../Button";
+import { IconButton } from "../Button";
 import { IconContext } from "react-icons";
 
 const InvoiceList = ({ modal }) => {

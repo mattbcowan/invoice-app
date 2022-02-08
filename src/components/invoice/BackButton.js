@@ -6,12 +6,12 @@ import { BiChevronLeft } from "react-icons/bi";
 const BackButton = ({ navigate }) => {
   return (
     <Wrapper>
-      <a onClick={() => navigate(-1)}>
+      <Button onClick={() => navigate(-1)}>
         <IconContext.Provider value={{ color: "#7C5DFA", size: "2em" }}>
           <BiChevronLeft />
         </IconContext.Provider>
         <BackText>Go back</BackText>
-      </a>
+      </Button>
     </Wrapper>
   );
 };
@@ -26,6 +26,11 @@ const BackText = styled.span`
 
 const Wrapper = styled.div`
   margin-top: 1em;
+`;
+
+const Button = styled.button`
+  background: none;
+  border: none;
   cursor: pointer;
 `;
 

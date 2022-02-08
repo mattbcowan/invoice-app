@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import styled from "styled-components";
 
 const modalElement = document.getElementById("modal-root");
 
@@ -38,9 +39,32 @@ const Modal = ({ children, defaultOpened = false }, ref) => {
   }, [handleEscape, isOpen]);
 
   return createPortal(
-    isOpen ? <div className="modal">{children}</div> : null,
+    isOpen ? (
+      <Overlay>
+        <Wrapper className="modal">{children}</Wrapper>
+      </Overlay>
+    ) : null,
     modalElement
   );
 };
+
+const Wrapper = styled.div`
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: #ffffff;
+  overflow: auto;
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+`;
 
 export default forwardRef(Modal);
