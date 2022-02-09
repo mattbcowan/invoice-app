@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import { get, ref } from "firebase/database";
 import FormInput from "./FormInput";
 import inputList from "./inputList.json";
+import styled from "styled-components";
+import { Button } from "../Button";
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
@@ -53,7 +55,7 @@ const InvoiceForm = ({ modal }) => {
   }, [isAddMode, invoiceId, setValue]);
 
   return (
-    <div>
+    <Wrapper>
       {loading && <p>Loading...</p>}
       {
         <form
@@ -61,76 +63,114 @@ const InvoiceForm = ({ modal }) => {
             saveInvoice(data, isAddMode, invoiceId);
           })}
         >
-          {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
-          <fieldset>
-            <legend>Bill From</legend>
-            {inputList.bill_from.map((listItem) => {
-              return (
-                <FormInput
-                  key={listItem.label}
-                  register={register}
-                  label={listItem.label}
-                  path={listItem.path}
-                  type={listItem.type}
-                  options={listItem.options && listItem.options}
-                  defaultValue={listItem.defaultValue && listItem.defaultValue}
-                />
-              );
-            })}
-          </fieldset>
-          <fieldset>
-            <legend>Bill To</legend>
-            {inputList.bill_to.map((listItem) => {
-              return (
-                <FormInput
-                  key={listItem.label}
-                  register={register}
-                  label={listItem.label}
-                  path={listItem.path}
-                  type={listItem.type}
-                  options={listItem.options && listItem.options}
-                  defaultValue={listItem.defaultValue && listItem.defaultValue}
-                />
-              );
-            })}
-          </fieldset>
-          <LineItems
-            {...{ control, watch, register, getValues, setValue, errors }}
-          />
-          <div>
+          <FieldContainer>
+            {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
+            <StyledFieldset>
+              <StyledLegend>Bill From</StyledLegend>
+              {inputList.bill_from.map((listItem) => {
+                return (
+                  <FormInput
+                    key={listItem.label}
+                    register={register}
+                    label={listItem.label}
+                    path={listItem.path}
+                    type={listItem.type}
+                    options={listItem.options && listItem.options}
+                    defaultValue={
+                      listItem.defaultValue && listItem.defaultValue
+                    }
+                  />
+                );
+              })}
+            </StyledFieldset>
+            <StyledFieldset>
+              <StyledLegend>Bill To</StyledLegend>
+              {inputList.bill_to.map((listItem) => {
+                return (
+                  <FormInput
+                    key={listItem.label}
+                    register={register}
+                    label={listItem.label}
+                    path={listItem.path}
+                    type={listItem.type}
+                    options={listItem.options && listItem.options}
+                    defaultValue={
+                      listItem.defaultValue && listItem.defaultValue
+                    }
+                  />
+                );
+              })}
+            </StyledFieldset>
+            <LineItems
+              {...{ control, watch, register, getValues, setValue, errors }}
+            />
+          </FieldContainer>
+          <ButtonsContainer>
             {isAddMode ? (
-              <div>
-                <input
-                  type="button"
-                  value="Discard"
+              <ButtonGroup>
+                <Button
+                  backgroundColor="#F9FAFE"
+                  color="#7E88C3"
                   onClick={() => modal.current.close()}
-                />
-                <input
-                  type="submit"
-                  value="Save as Draft"
+                >
+                  Discard
+                </Button>
+                <Button
+                  backgroundColor="#373B53"
+                  color="#888EB0"
                   onClick={setValue("status", "Draft")}
-                />
-                <input
-                  type="submit"
-                  value="Save & Send"
-                  onClick={setValue("status", "Pending")}
-                />
-              </div>
+                >
+                  Save as Draft
+                </Button>
+                <Button onClick={setValue("status", "Pending")}>
+                  Save & Send
+                </Button>
+              </ButtonGroup>
             ) : (
-              <div>
-                <input
-                  type="button"
-                  value="Cancel"
-                  onClick={() => modal.current.close()}
-                />
-                <input type="submit" value="Save Changes" />
-              </div>
+              <ButtonGroup>
+                <Button onClick={() => modal.current.close()}>Cancel</Button>
+                <Button type="submit">Save Changes</Button>
+              </ButtonGroup>
             )}
-          </div>
+          </ButtonsContainer>
         </form>
       }
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 100vw;
+  background: linear-gradient(to top, rgba(0, 0, 0, 10%) 5%, transparent 15%);
+`;
+
+const FieldContainer = styled.div`
+  margin: 1em;
+`;
+
+const StyledLegend = styled.legend`
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #7c5dfa;
+`;
+
+const StyledFieldset = styled.fieldset`
+  border: none;
+`;
+
+const ButtonsContainer = styled.div`
+  width: 100%;
+  background-color: #ffffff;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  margin: 2em;
+  padding-top: 2em;
+`;
 
 export default InvoiceForm;

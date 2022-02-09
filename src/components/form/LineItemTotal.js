@@ -16,5 +16,5 @@ export const LineItemTotal = ({ control, index, setValue }) => {
   const output = totalCal(results);
   setValue(`line_items.${index}.total`, output);
 
-  return output;
+  return <div>{output ? output : 0}</div>;
 };

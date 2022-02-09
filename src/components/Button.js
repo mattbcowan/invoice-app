@@ -24,8 +24,9 @@ export const IconButton = ({ onClick, children, backgroundColor, color }) => {
 const Wrapper = styled.button`
   background-color: ${(props) => props.backgroundColor || "#7c5dfa"};
   color: ${(props) => props.color || "#ffffff"};
-  font-size: 15px;
-  padding: 1em 1.5em;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 1.5em 1.5em;
   border-radius: 5em;
   border: none;
   display: flex;
@@ -36,7 +37,8 @@ const Wrapper = styled.button`
 const WrapperIcon = styled.button`
   background-color: ${(props) => props.backgroundColor || "#7c5dfa"};
   color: ${(props) => props.color || "#ffffff"};
-  font-size: 15px;
+  font-size: 12px;
+  line-height: 15px;
   padding: 0.25em;
   padding-right: 1em;
   border-radius: 5em;
