@@ -1,8 +1,9 @@
 import React from "react";
 import { useFieldArray } from "react-hook-form";
+import { FaTrash } from "react-icons/fa";
 import { LineItemTotal } from "./LineItemTotal";
 import FormInput from "./FormInput";
-import { Button } from "../Button";
+import { Button, IconButton } from "../Button";
 import styled from "styled-components";
 
 const LineItems = ({ control, register, setValue }) => {
@@ -12,7 +13,7 @@ const LineItems = ({ control, register, setValue }) => {
   });
 
   return (
-    <div>
+    <Wrapper>
       <h3>Item List</h3>
       <div>
         <StyledList>
@@ -42,22 +43,30 @@ const LineItems = ({ control, register, setValue }) => {
                     placeholder="Price"
                   />
                   <TotalWrapper>
-                    <label>Total</label>
                     <LineItemTotal
                       control={control}
                       index={index}
                       setValue={setValue}
                     />
                   </TotalWrapper>
-                  <Button onClick={() => remove(index)}>Delete</Button>
+                  <DeleteButton onClick={() => remove(index)}>
+                    <FaTrash />
+                  </DeleteButton>
                 </Grid>
               </StyledFieldset>
             </li>
           ))}
         </StyledList>
-        <Button onClick={() => append()}>Add New Item</Button>
+        <Button
+          width={"100%"}
+          backgroundColor={"#F9FAFE"}
+          color={"#7E88C3"}
+          onClick={() => append()}
+        >
+          + Add New Item
+        </Button>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
@@ -79,7 +88,19 @@ const Grid = styled.div`
   max-width: 100%;
   display: grid;
   gap: 1em;
-  grid-template-columns: 20% 35% 35% 20%;
+  grid-template-columns: 15% 25% 15% 15%;
+`;
+
+const Wrapper = styled.div`
+  margin-bottom: 5em;
+`;
+
+const DeleteButton = styled.button`
+  background: transparent;
+  border: none;
+  color: #888eb0;
+  padding: 0;
+  margin-top: 1.75em;
 `;
 
 export default LineItems;
