@@ -14,11 +14,7 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
 
   return (
     <ButtonContainer>
-      <Button
-        backgroundColor="#F9FAFE"
-        color="#7E88C3"
-        onClick={() => modal.current.open()}
-      >
+      <Button variant="secondary" onClick={() => modal.current.open()}>
         Edit
       </Button>
       <Button

@@ -123,21 +123,19 @@ const InvoiceForm = ({ modal }) => {
           <ButtonsContainer>
             {isAddMode ? (
               <ButtonGroup>
-                <Button
-                  backgroundColor="#F9FAFE"
-                  color="#7E88C3"
-                  onClick={() => modal.current.close()}
-                >
+                <Button variant="danger" onClick={() => modal.current.close()}>
                   Discard
                 </Button>
                 <Button
-                  backgroundColor="#373B53"
-                  color="#888EB0"
+                  variant="tertiary"
                   onClick={setValue("status", "Draft")}
                 >
                   Save as Draft
                 </Button>
-                <Button onClick={setValue("status", "Pending")}>
+                <Button
+                  variant="primary"
+                  onClick={setValue("status", "Pending")}
+                >
                   Save & Send
                 </Button>
               </ButtonGroup>
