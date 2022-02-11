@@ -67,21 +67,36 @@ const InvoiceForm = ({ modal }) => {
             {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
             <StyledFieldset>
               <StyledLegend>Bill From</StyledLegend>
-              {inputList.bill_from.map((listItem) => {
-                return (
-                  <FormInput
-                    key={listItem.label}
-                    register={register}
-                    label={listItem.label}
-                    path={listItem.path}
-                    type={listItem.type}
-                    options={listItem.options && listItem.options}
-                    defaultValue={
-                      listItem.defaultValue && listItem.defaultValue
-                    }
-                  />
-                );
-              })}
+              <InputLabel>Street Address</InputLabel>
+              <StyledInput
+                type="text"
+                {...register("bill_from_info.street_name")}
+                placeholder="Street Address"
+              />
+              <InputLabel>City</InputLabel>
+              <StyledInput
+                type="text"
+                {...register("bill_from_info.city")}
+                placeholder="City"
+              />
+              <InputLabel>State</InputLabel>
+              <StyledInput
+                type="text"
+                {...register("bill_from_info.state")}
+                placeholder="State"
+              />
+              <InputLabel>Zip Code</InputLabel>
+              <StyledInput
+                type="text"
+                {...register("bill_from_info.zip_code")}
+                placeholder="Zip Code"
+              />
+              <InputLabel>Country</InputLabel>
+              <StyledInput
+                type="text"
+                {...register("bill_from_info.country")}
+                placeholder="Country"
+              />
             </StyledFieldset>
             <StyledFieldset>
               <StyledLegend>Bill To</StyledLegend>
@@ -138,6 +153,25 @@ const InvoiceForm = ({ modal }) => {
     </Wrapper>
   );
 };
+
+const InputLabel = styled.label`
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #7e88c3;
+  margin-bottom: 0.75em;
+`;
+
+const StyledInput = styled.input`
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: #0c0e16;
+  padding: 1em;
+  border: 1px solid #dfe3fa;
+  border-radius: 0.5em;
+`;
 
 const Wrapper = styled.div`
   width: 100vw;
