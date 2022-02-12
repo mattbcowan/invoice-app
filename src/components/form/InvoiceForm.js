@@ -10,6 +10,8 @@ import FormInput from "./FormInput";
 import inputList from "./inputList.json";
 import styled from "styled-components";
 import { Button } from "../Button";
+import TextField from "./TextField";
+import Dropdown from "./Dropdown";
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
@@ -67,54 +69,91 @@ const InvoiceForm = ({ modal }) => {
             {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
             <StyledFieldset>
               <StyledLegend>Bill From</StyledLegend>
-              <InputLabel>Street Address</InputLabel>
-              <StyledInput
-                type="text"
-                {...register("bill_from_info.street_name")}
-                placeholder="Street Address"
+              <TextField
+                register={register}
+                path={"bill_from_info.street_name"}
+                label={"Street Address"}
               />
-              <InputLabel>City</InputLabel>
-              <StyledInput
-                type="text"
-                {...register("bill_from_info.city")}
-                placeholder="City"
+              <TextField
+                register={register}
+                path={"bill_from_info.city"}
+                label={"City"}
               />
-              <InputLabel>State</InputLabel>
-              <StyledInput
-                type="text"
-                {...register("bill_from_info.state")}
-                placeholder="State"
+              <TextField
+                register={register}
+                path={"bill_from_info.state"}
+                label={"State"}
               />
-              <InputLabel>Zip Code</InputLabel>
-              <StyledInput
-                type="text"
-                {...register("bill_from_info.zip_code")}
-                placeholder="Zip Code"
+              <TextField
+                register={register}
+                path={"bill_from_info.zip_code"}
+                label={"Zip Code"}
               />
-              <InputLabel>Country</InputLabel>
-              <StyledInput
-                type="text"
-                {...register("bill_from_info.country")}
-                placeholder="Country"
+              <TextField
+                register={register}
+                path={"bill_from_info.country"}
+                label={"Country"}
               />
             </StyledFieldset>
             <StyledFieldset>
               <StyledLegend>Bill To</StyledLegend>
-              {inputList.bill_to.map((listItem) => {
-                return (
-                  <FormInput
-                    key={listItem.label}
-                    register={register}
-                    label={listItem.label}
-                    path={listItem.path}
-                    type={listItem.type}
-                    options={listItem.options && listItem.options}
-                    defaultValue={
-                      listItem.defaultValue && listItem.defaultValue
-                    }
-                  />
-                );
-              })}
+              <TextField
+                register={register}
+                path={"bill_to_info.client_name"}
+                label={"Client's Name"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.client_email"}
+                label={"Client's Email"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.street_name"}
+                label={"Street Address"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.city"}
+                label={"City"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.state"}
+                label={"State"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.zip_code"}
+                label={"Zip Code"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.country"}
+                label={"Country"}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.invoice_date"}
+                label={"Invoice Date"}
+              />
+              <Dropdown
+                register={register}
+                label={"Payment Terms"}
+                path={"bill_to_info.payment_terms"}
+                defaultValue="Net 30 Days"
+                options={[
+                  "Net 1 Day",
+                  "Net 7 Days",
+                  "Net 14 Days",
+                  "Net 30 Days",
+                ]}
+              />
+              <TextField
+                register={register}
+                path={"bill_to_info.project_description"}
+                label={"Project Description"}
+              />
             </StyledFieldset>
             <LineItems
               {...{ control, watch, register, getValues, setValue, errors }}
