@@ -8,7 +8,8 @@ import Modal from "./components/Modal";
 import InvoiceForm from "./components/form/InvoiceForm";
 import Invoice from "./components/invoice/Invoice";
 import ErrorBoundary from "./components/ErrorBoundary";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "./theme/theme";
 import GlobalStyle from "./theme/globalStyles";
 
 function App() {
@@ -38,34 +39,36 @@ function App() {
   } else {
     return (
       <ErrorBoundary>
-        <GlobalStyle />
-        <AppContainer>
-          <SignOut />
-          <Wrapper>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route
-                path="/invoices"
-                element={
-                  <PrivateRoute>
-                    <InvoiceList modal={modal} />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/invoices/:invoiceId"
-                element={
-                  <PrivateRoute>
-                    <Invoice modal={modal} />
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
-          </Wrapper>
-        </AppContainer>
-        <Modal ref={modal}>
-          <InvoiceForm modal={modal} />
-        </Modal>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <AppContainer>
+            <SignOut />
+            <Wrapper>
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route
+                  path="/invoices"
+                  element={
+                    <PrivateRoute>
+                      <InvoiceList modal={modal} />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/invoices/:invoiceId"
+                  element={
+                    <PrivateRoute>
+                      <Invoice modal={modal} />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </Wrapper>
+          </AppContainer>
+          <Modal ref={modal}>
+            <InvoiceForm modal={modal} />
+          </Modal>
+        </ThemeProvider>
       </ErrorBoundary>
     );
   }

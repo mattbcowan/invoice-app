@@ -6,7 +6,7 @@ import ShadowBox from "../ShadowBox";
 import { StatusTag } from "../StatusTag";
 import { Flexbox, Grid } from "../Box";
 import Currency from "../Currency";
-import { Typography } from "../../Typography";
+import { Typography } from "../Typography";
 import theme from "../../theme/theme";
 
 const convertDateToString = (date) => {

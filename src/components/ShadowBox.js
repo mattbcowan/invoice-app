@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { layout, space } from "styled-system";
+import { layout, space, flexbox } from "styled-system";
 import theme from "../theme/theme";
 
 const ShadowBox = styled.div(
@@ -11,7 +11,8 @@ const ShadowBox = styled.div(
     borderRadius: theme.radii[2],
   },
   space,
-  layout
+  layout,
+  flexbox
 );
 
 export default ShadowBox;

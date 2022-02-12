@@ -12,6 +12,7 @@ const theme = {
   fontWeights,
   lineHeights,
   letterSpacing,
+  fontFamily: "Spartan, sans-serif",
   colors: {
     darkPurple: "#7C5DFA",
     purple: "#9277FF",
