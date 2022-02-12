@@ -3,7 +3,7 @@ import { useFieldArray } from "react-hook-form";
 import { FaTrash } from "react-icons/fa";
 import { LineItemTotal } from "./LineItemTotal";
 import FormInput from "./FormInput";
-import { Button, IconButton } from "../Button";
+import { Button } from "../Button";
 import styled from "styled-components";
 
 const LineItems = ({ control, register, setValue }) => {

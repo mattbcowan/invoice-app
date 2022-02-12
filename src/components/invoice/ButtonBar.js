@@ -18,7 +18,7 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
         Edit
       </Button>
       <Button
-        backgroundColor="#EC5757"
+        variant="danger"
         onClick={() =>
           deleteInvoice(invoiceId).then(() => navigate("/invoices"))
         }
@@ -26,9 +26,12 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
         Delete
       </Button>
       {invoice.status === "Paid" ? (
-        <Button disabled>Mark As Paid</Button>
+        <Button variant="primary" disabled>
+          Mark As Paid
+        </Button>
       ) : (
         <Button
+          variant="primary"
           onClick={() => {
             handlePaid();
           }}

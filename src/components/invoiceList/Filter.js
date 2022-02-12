@@ -3,6 +3,7 @@ import Select, { components } from "react-select";
 import { IconContext } from "react-icons";
 import { BiChevronDown } from "react-icons/bi";
 import styled from "styled-components";
+import theme from "../../theme/theme";
 
 // For when you get to styling the filter
 // https://react-select.com/advanced#experimental
@@ -88,11 +89,9 @@ const Dropdown = ({ target, isOpen, children }) => {
   );
 };
 
-const FilterButton = styled.a`
-  font-size: 15px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-`;
+const FilterButton = styled.a({
+  fontSize: theme.fontSizes.body,
+  fontWeight: theme.fontWeights.bold,
+});
 
 export default Filter;

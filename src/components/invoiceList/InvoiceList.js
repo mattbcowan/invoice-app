@@ -5,8 +5,9 @@ import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { IconButton } from "../Button";
+import { Button } from "../Button";
 import { IconContext } from "react-icons";
+import { Box, Grid } from "../Box";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
@@ -51,32 +52,32 @@ const InvoiceList = ({ modal }) => {
   };
 
   return (
-    <div>
-      <OptionsBar>
+    <Box m={4}>
+      <Grid display="grid" gridTemplateColumns="1fr 1fr" gridGap={1} mb={4}>
         <div>
           <Header>Invoices</Header>
           <div>{countInvoices(invoices)}</div>
         </div>
         <ButtonsContainer>
           <Filter filter={filterStatus} setFilter={setFilterStatus} />
-          <IconButton onClick={() => modal.current.open()}>
+          <Button variant="primaryIcon" onClick={() => modal.current.open()}>
             <IconContext.Provider
               value={{
                 color: "#ffffff",
-                size: "2.5em",
+                size: "32px",
                 style: { marginRight: "0.4em" },
               }}
             >
               <AiFillPlusCircle />
             </IconContext.Provider>
             New
-          </IconButton>
+          </Button>
         </ButtonsContainer>
-      </OptionsBar>
+      </Grid>
       {loading && <p>Loading...</p>}
       {!invoices && <p>No Invoices!</p>}
       {invoices && (
-        <StyledUl>
+        <Grid display="grid" gridTemplateColumns="1fr" gridGap={3}>
           {invoices
             .filter((invoice) => {
               let filters = filterStatus.map((value) => {
@@ -85,29 +86,13 @@ const InvoiceList = ({ modal }) => {
               return filters.includes(invoice[1].status);
             })
             .map((invoice) => (
-              <li key={invoice[0]}>
-                <InvoiceListCard invoice={invoice} />
-              </li>
+              <InvoiceListCard key={invoice} invoice={invoice} />
             ))}
-        </StyledUl>
+        </Grid>
       )}
-    </div>
+    </Box>
   );
 };
-
-const StyledUl = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`;
-
-const OptionsBar = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
-  margin: 2em;
-`;
 
 const ButtonsContainer = styled.div`
   display: flex;

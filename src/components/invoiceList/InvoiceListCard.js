@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Container from "../Container";
-import StatusTag from "../StatusTag";
+import { GoPrimitiveDot } from "react-icons/go";
+import ShadowBox from "../ShadowBox";
+import { StatusTag } from "../StatusTag";
+import { Flexbox, Grid } from "../Box";
+import Currency from "../Currency";
+import { Typography } from "../../Typography";
+import theme from "../../theme/theme";
 
 const convertDateToString = (date) => {
   let dateString = date.toUTCString().slice(4, 16);
@@ -18,67 +23,79 @@ const getTotal = (prices) => {
 
 const InvoiceListCard = ({ invoice }) => {
   return (
-    <Container>
-      <Wrapper>
-        <div>
-          <Hash>#</Hash>
-          <InvoiceNumber to={invoice[0]}>{invoice[0]}</InvoiceNumber>
-        </div>
-        <ClientName>{invoice[1].bill_to_info.client_name}</ClientName>
-        <div>
-          <DueDate>
-            Due:{" "}
-            {convertDateToString(
-              new Date(invoice[1].bill_to_info.invoice_date)
-            )}
-          </DueDate>
-          <Total>${getTotal(invoice[1].line_items)}</Total>
-        </div>
-        <StatusWrapper>
-          <StatusTag status={invoice[1].status} />
-        </StatusWrapper>
-      </Wrapper>
-    </Container>
+    <ActionBox to={invoice[0]}>
+      <ShadowBox p={4}>
+        <Grid
+          display="grid"
+          gridTemplateColumns="2fr 1fr"
+          gridTemplateRows="1fr 2fr"
+        >
+          <Typography
+            fontSize={theme.fontSizes.body}
+            fontWeight={theme.fontWeights.bold}
+            letterSpacing={theme.letterSpacing[1]}
+            lineHeight={theme.lineHeights[0]}
+            color={theme.colors.black}
+          >
+            <Hash>#</Hash>
+            {invoice[0]}
+          </Typography>
+          <Typography
+            fontSize={theme.fontSizes.body}
+            fontWeight={theme.fontWeights.normal}
+            letterSpacing={theme.letterSpacing[1]}
+            lineHeight={theme.lineHeights[0]}
+            color={"#858bb2"}
+            textAlign={"right"}
+          >
+            {invoice[1].bill_to_info.client_name}
+          </Typography>
+          <div>
+            <Typography
+              fontSize={theme.fontSizes.body}
+              fontWeight={theme.fontWeights.normal}
+              letterSpacing={theme.letterSpacing[1]}
+              lineHeight={theme.lineHeights[0]}
+              color={theme.colors.lightPurpleGray}
+              my={3}
+            >
+              Due:{" "}
+              {convertDateToString(
+                new Date(invoice[1].bill_to_info.invoice_date)
+              )}
+            </Typography>
+            <Typography
+              fontSize={theme.fontSizes.h2}
+              fontWeight={theme.fontWeights.bold}
+              letterSpacing={theme.letterSpacing[3]}
+              lineHeight={theme.lineHeights[0]}
+              color={theme.colors.black}
+            >
+              <Currency value={getTotal(invoice[1].line_items)} />
+            </Typography>
+          </div>
+          <Flexbox display="flex" alignItems="center" justifyContent="flex-end">
+            <StatusTag variant={invoice[1].status.toLowerCase()}>
+              <GoPrimitiveDot /> {invoice[1].status}
+            </StatusTag>
+          </Flexbox>
+        </Grid>
+      </ShadowBox>
+    </ActionBox>
   );
 };
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-self: center;
-`;
-
-const InvoiceNumber = styled(Link)`
+const ActionBox = styled(Link)`
   text-decoration: none;
-  font-weight: 700;
-  color: #0c0e16;
+
+  &:hover {
+    outline: 1px solid ${theme.colors.darkPurple};
+    border-radius: ${theme.radii[2]};
+  }
 `;
 
 const Hash = styled.span`
   color: #7e88c3;
-`;
-
-const ClientName = styled.div`
-  color: #858bb2;
-  text-align: right;
-  margin-bottom: 1.5em;
-`;
-
-const DueDate = styled.div`
-  color: #7e88c3;
-  line-height: 3;
-`;
-
-const Total = styled.div`
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.8px;
-  line-height: 1;
-  color: #0c0e16;
-`;
-
-const StatusWrapper = styled.div`
-  align-self: flex-end;
 `;
 
 export default InvoiceListCard;
