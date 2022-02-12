@@ -6,7 +6,7 @@ import { Box, Flexbox } from "../Box";
 import { Typography } from "../Typography";
 import { BiChevronDown } from "react-icons/bi";
 
-const Dropdown = ({ register, label, path, defaultValue, options }) => {
+const Dropdown = ({ register, label, path, defaultValue, options, width }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(defaultValue);
 
@@ -20,7 +20,7 @@ const Dropdown = ({ register, label, path, defaultValue, options }) => {
   };
 
   return (
-    <Box>
+    <Box width={width}>
       <Typography
         fontSize={theme.fontSizes.body}
         fontWeight={theme.fontWeights.normal}
@@ -31,7 +31,7 @@ const Dropdown = ({ register, label, path, defaultValue, options }) => {
         {label}
       </Typography>
       <Box>
-        <Title p={12} my={2} type="button" onClick={toggleList}>
+        <Title width={"100%"} p={12} my={2} type="button" onClick={toggleList}>
           <div>
             <div>
               {title} <BiChevronDown />
@@ -71,6 +71,7 @@ const Title = styled("button")(
     border: "1px solid #dfe3fa",
     outline: "none",
     background: "transparent",
+    textAlign: "left",
     ":focus": {
       borderColor: "#9277ff",
     },

@@ -5,9 +5,9 @@ import theme from "../../theme/theme";
 import { Box } from "../Box";
 import { Typography } from "../Typography";
 
-const TextField = ({ register, label, path }) => {
+const TextField = ({ register, label, path, width }) => {
   return (
-    <Box>
+    <Box width={width} my={2}>
       <Typography
         fontSize={theme.fontSizes.body}
         fontWeight={theme.fontWeights.normal}
@@ -17,7 +17,7 @@ const TextField = ({ register, label, path }) => {
       >
         {label}
       </Typography>
-      <Input p={12} my={2} type="text" {...register(path)} />
+      <Input width={"100%"} p={12} my={2} type="text" {...register(path)} />
     </Box>
   );
 };

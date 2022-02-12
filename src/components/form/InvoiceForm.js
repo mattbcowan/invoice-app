@@ -6,12 +6,27 @@ import LineItems from "./LineItems";
 import { invoiceSchema } from "../../schema";
 import { useLocation } from "react-router-dom";
 import { get, ref } from "firebase/database";
-import FormInput from "./FormInput";
-import inputList from "./inputList.json";
 import styled from "styled-components";
 import { Button } from "../Button";
 import TextField from "./TextField";
 import Dropdown from "./Dropdown";
+import theme from "../../theme/theme";
+import { Typography } from "../Typography";
+
+const Header = ({ children }) => {
+  return (
+    <Typography
+      fontSize={24}
+      fontWeight={theme.fontWeights.bold}
+      letterSpacing={theme.letterSpacing[2]}
+      lineHeight={theme.lineHeights[0]}
+      color={theme.colors.black}
+      m={3}
+    >
+      {children}
+    </Typography>
+  );
+};
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
@@ -66,30 +81,39 @@ const InvoiceForm = ({ modal }) => {
           })}
         >
           <FieldContainer>
-            {isAddMode ? <h1>New Invoice</h1> : <h1>Edit #{invoiceId}</h1>}
+            {isAddMode ? (
+              <Header>New Invoice</Header>
+            ) : (
+              <Header>Edit #{invoiceId}</Header>
+            )}
             <StyledFieldset>
               <StyledLegend>Bill From</StyledLegend>
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_from_info.street_name"}
                 label={"Street Address"}
               />
               <TextField
+                width={"50%"}
                 register={register}
                 path={"bill_from_info.city"}
                 label={"City"}
               />
               <TextField
+                width={"15%"}
                 register={register}
                 path={"bill_from_info.state"}
                 label={"State"}
               />
               <TextField
+                width={"25%"}
                 register={register}
                 path={"bill_from_info.zip_code"}
                 label={"Zip Code"}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_from_info.country"}
                 label={"Country"}
@@ -98,46 +122,55 @@ const InvoiceForm = ({ modal }) => {
             <StyledFieldset>
               <StyledLegend>Bill To</StyledLegend>
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.client_name"}
                 label={"Client's Name"}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.client_email"}
                 label={"Client's Email"}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.street_name"}
                 label={"Street Address"}
               />
               <TextField
+                width={"50%"}
                 register={register}
                 path={"bill_to_info.city"}
                 label={"City"}
               />
               <TextField
+                width={"15%"}
                 register={register}
                 path={"bill_to_info.state"}
                 label={"State"}
               />
               <TextField
+                width={"25%"}
                 register={register}
                 path={"bill_to_info.zip_code"}
                 label={"Zip Code"}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.country"}
                 label={"Country"}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.invoice_date"}
                 label={"Invoice Date"}
               />
               <Dropdown
+                width={"100%"}
                 register={register}
                 label={"Payment Terms"}
                 path={"bill_to_info.payment_terms"}
@@ -150,6 +183,7 @@ const InvoiceForm = ({ modal }) => {
                 ]}
               />
               <TextField
+                width={"100%"}
                 register={register}
                 path={"bill_to_info.project_description"}
                 label={"Project Description"}
@@ -191,25 +225,6 @@ const InvoiceForm = ({ modal }) => {
   );
 };
 
-const InputLabel = styled.label`
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: -0.25px;
-  color: #7e88c3;
-  margin-bottom: 0.75em;
-`;
-
-const StyledInput = styled.input`
-  font-size: 12px;
-  line-height: 15px;
-  font-weight: 700;
-  letter-spacing: -0.25px;
-  color: #0c0e16;
-  padding: 1em;
-  border: 1px solid #dfe3fa;
-  border-radius: 0.5em;
-`;
-
 const Wrapper = styled.div`
   width: 100vw;
   background: linear-gradient(to top, rgba(0, 0, 0, 10%) 5%, transparent 15%);
@@ -228,6 +243,9 @@ const StyledLegend = styled.legend`
 
 const StyledFieldset = styled.fieldset`
   border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
 `;
 
 const ButtonsContainer = styled.div`
