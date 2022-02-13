@@ -82,7 +82,7 @@ const Grid = styled.div`
   max-width: 100%;
   display: grid;
   gap: 1em;
-  grid-template-columns: 15% 25% 15% 15%;
+  grid-template-columns: 20% 30% 25% 25%;
 `;
 
 const Wrapper = styled.div`
@@ -94,7 +94,9 @@ const DeleteButton = styled.button`
   border: none;
   color: #888eb0;
   padding: 0;
+  display: flex;
   margin-top: 1.75em;
+  align-items: center;
 `;
 
 export default LineItems;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Currency from "../Currency";
 
 const LineItemsBox = ({ invoice }) => {
   const calculateTotal = (line_items) => {
@@ -18,10 +19,12 @@ const LineItemsBox = ({ invoice }) => {
                 <div>
                   <LineItemLabel>{item.name}</LineItemLabel>
                   <QuantityLabel>
-                    {item.quantity} x ${item.price}
+                    {item.quantity} x <Currency value={item.price} />
                   </QuantityLabel>
                 </div>
-                <LineItemLabel>${item.total}</LineItemLabel>
+                <LineItemLabel>
+                  <Currency value={item.total} />
+                </LineItemLabel>
               </LineItem>
             );
           })}
@@ -31,7 +34,7 @@ const LineItemsBox = ({ invoice }) => {
           <LineItem>
             <GrandTotalLabel>Grand Total</GrandTotalLabel>
             <GrandTotalAmount>
-              ${calculateTotal(invoice.line_items)}
+              <Currency value={calculateTotal(invoice.line_items)} />
             </GrandTotalAmount>
           </LineItem>
         </LineItemsWrapper>

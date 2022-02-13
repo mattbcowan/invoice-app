@@ -1,5 +1,6 @@
 import { useWatch } from "react-hook-form";
 import styled from "styled-components";
+import Currency from "../Currency";
 
 const totalCal = (results) => {
   let totalValue = 0;
@@ -20,7 +21,9 @@ export const LineItemTotal = ({ control, index, setValue }) => {
   return (
     <Wrapper>
       <StyledLabel>Total</StyledLabel>
-      <Total>{output ? output : 0}</Total>
+      <Total>
+        {output ? <Currency value={output} /> : <Currency value={0} />}
+      </Total>
     </Wrapper>
   );
 };
@@ -28,7 +31,7 @@ export const LineItemTotal = ({ control, index, setValue }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1em;
+  margin-top: 0.6em;
 `;
 
 const StyledLabel = styled.label`
@@ -44,5 +47,5 @@ const Total = styled.div`
   letter-spacing: -0.25px;
   color: #888eb0;
   font-weight: 700;
-  margin-top: 1.75em;
+  margin-top: 1.5em;
 `;
