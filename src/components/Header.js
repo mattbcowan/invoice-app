@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Box, Flexbox } from "./Box";
+import { Flexbox } from "./Box";
 
 const Header = () => {
   return (
