@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { variant } from "styled-system";
+import { variant, layout } from "styled-system";
 import theme from "../theme/theme";
 
 export const Button = styled("button")(
@@ -39,5 +39,6 @@ export const Button = styled("button")(
         bg: theme.colors.red,
       },
     },
-  })
+  }),
+  layout
 );
