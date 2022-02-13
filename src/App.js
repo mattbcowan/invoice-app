@@ -11,6 +11,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
 import GlobalStyle from "./theme/globalStyles";
+import Header from "./components/Header";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,7 +43,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <AppContainer>
-            <SignOut />
+            <Header />
             <Wrapper>
               <Routes>
                 <Route path="/" element={<Login />} />

@@ -2,9 +2,9 @@ import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { FaTrash } from "react-icons/fa";
 import { LineItemTotal } from "./LineItemTotal";
-import FormInput from "./FormInput";
 import { Button } from "../Button";
 import styled from "styled-components";
+import TextField from "./TextField";
 
 const LineItems = ({ control, register, setValue }) => {
   const { fields, append, remove } = useFieldArray({
@@ -20,27 +20,21 @@ const LineItems = ({ control, register, setValue }) => {
           {fields.map((item, index) => (
             <li key={item.id}>
               <StyledFieldset>
-                <FormInput
+                <TextField
                   register={register}
                   label="Item Name"
                   path={`line_items.${index}.name`}
-                  type="text"
-                  placeholder="Service Name"
                 />
                 <Grid>
-                  <FormInput
+                  <TextField
                     register={register}
                     label="Qty."
                     path={`line_items.${index}.quantity`}
-                    type="text"
-                    placeholder="Quantity"
                   />
-                  <FormInput
+                  <TextField
                     register={register}
                     label="Price"
                     path={`line_items.${index}.price`}
-                    type="text"
-                    placeholder="Price"
                   />
                   <TotalWrapper>
                     <LineItemTotal

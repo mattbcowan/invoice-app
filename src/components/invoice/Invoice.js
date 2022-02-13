@@ -6,7 +6,7 @@ import { auth, db } from "../../firebase";
 import ShadowBox from "../ShadowBox";
 import ButtonBar from "./ButtonBar";
 import LineItemsBox from "./LineItemsBox";
-import BackButton from "./BackButton";
+import BackButton from "../BackButton";
 import { Box, Grid } from "../Box";
 import { StatusTag } from "../StatusTag";
 import { Typography } from "../Typography";
