@@ -45,8 +45,8 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex: 1;
-  justify-content: space-between;
+  gap: 1em;
+  justify-content: flex-end;
   background-color: #ffffff;
   width: 100%;
   padding: 2em;

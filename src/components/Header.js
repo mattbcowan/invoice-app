@@ -1,8 +1,19 @@
+import { signOut } from "firebase/auth";
 import React from "react";
 import styled from "styled-components";
+import { auth } from "../firebase";
+import { useStateValue } from "../StateProvider";
 import { Flexbox } from "./Box";
 
 const Header = () => {
+  const [{ user }, dispatch] = useStateValue();
+
+  const handleSignOut = () => {
+    signOut(auth).catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <Flexbox
       display="flex"
@@ -16,8 +27,9 @@ const Header = () => {
       <div>
         <ProfileContainer>
           <ProfileImg
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            src={user.photoURL}
             alt="Profile Picture"
+            onClick={handleSignOut}
           />
         </ProfileContainer>
       </div>
