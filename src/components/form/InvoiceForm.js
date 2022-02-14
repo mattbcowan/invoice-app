@@ -32,6 +32,7 @@ const InvoiceForm = ({ modal }) => {
   let location = useLocation();
   const invoiceId = location.pathname.slice(10, 16);
   const [loading, setLoading] = useState(null);
+  const invoiceDate = new Date(Date.now());
   const isAddMode = !invoiceId;
   const {
     control,
@@ -43,7 +44,10 @@ const InvoiceForm = ({ modal }) => {
     watch,
   } = useForm({
     resolver: yupResolver(invoiceSchema),
-    defaultValues: { status: "Pending", line_items: [] },
+    defaultValues: {
+      status: "Pending",
+      line_items: [],
+    },
   });
 
   useEffect(() => {
@@ -168,6 +172,8 @@ const InvoiceForm = ({ modal }) => {
                 register={register}
                 path={"bill_to_info.invoice_date"}
                 label={"Invoice Date"}
+                value={invoiceDate.toDateString()}
+                disabled={true}
               />
               <Dropdown
                 width={"100%"}
@@ -175,6 +181,7 @@ const InvoiceForm = ({ modal }) => {
                 label={"Payment Terms"}
                 path={"bill_to_info.payment_terms"}
                 defaultValue="Net 30 Days"
+                setValue={setValue}
                 options={[
                   "Net 1 Day",
                   "Net 7 Days",
@@ -209,6 +216,7 @@ const InvoiceForm = ({ modal }) => {
                   Save as Draft
                 </Button>
                 <Button
+                  type="submit"
                   variant="primary"
                   onClick={setValue("status", "Pending")}
                 >

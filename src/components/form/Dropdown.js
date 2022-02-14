@@ -6,7 +6,16 @@ import { Box, Flexbox } from "../Box";
 import { Typography } from "../Typography";
 import { BiChevronDown } from "react-icons/bi";
 
-const Dropdown = ({ register, label, path, defaultValue, options, width }) => {
+const Dropdown = ({
+  register,
+  label,
+  path,
+  defaultValue,
+  options,
+  width,
+  value,
+  setValue,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(defaultValue);
 
@@ -16,11 +25,14 @@ const Dropdown = ({ register, label, path, defaultValue, options, width }) => {
 
   const setSelection = (selection) => {
     setTitle(selection);
+    setValue(`${path}`, selection);
+    console.log(selection);
     setIsOpen(false);
   };
 
   return (
     <Box width={width}>
+      <Hidden type="text" {...register(path)} value={value} />
       <Typography
         fontSize={theme.fontSizes.body}
         fontWeight={theme.fontWeights.normal}
@@ -41,9 +53,10 @@ const Dropdown = ({ register, label, path, defaultValue, options, width }) => {
         {isOpen && (
           <Wrapper mb={4}>
             <Flexbox display="flex" flexDirection="column">
-              {options.map((option) => {
+              {options.map((option, i) => {
                 return (
                   <Option
+                    key={i}
                     p={3}
                     type="button"
                     onClick={() => setSelection(option)}
@@ -114,5 +127,7 @@ const Wrapper = styled("div")(
   layout,
   shadow
 );
+
+const Hidden = styled("input")({ display: "none" });
 
 export default Dropdown;
