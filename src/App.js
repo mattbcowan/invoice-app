@@ -65,9 +65,12 @@ function App() {
                 <Route
                   path="/invoices/:invoiceId"
                   element={
-                    <PrivateRoute>
-                      <Invoice modal={modal} />
-                    </PrivateRoute>
+                    <>
+                      <Header />
+                      <PrivateRoute>
+                        <Invoice modal={modal} />
+                      </PrivateRoute>
+                    </>
                   }
                 />
               </Routes>
