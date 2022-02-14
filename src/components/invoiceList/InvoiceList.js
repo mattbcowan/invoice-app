@@ -8,6 +8,8 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { Button } from "../Button";
 import { IconContext } from "react-icons";
 import { Box, Grid } from "../Box";
+import { Typography } from "../Typography";
+import theme from "../../theme/theme";
 
 const InvoiceList = ({ modal }) => {
   const [invoices, setInvoices] = useState(null);
@@ -56,7 +58,14 @@ const InvoiceList = ({ modal }) => {
       <Grid display="grid" gridTemplateColumns="1fr 1fr" gridGap={1} mb={4}>
         <div>
           <Header>Invoices</Header>
-          <div>{countInvoices(invoices)}</div>
+          <Typography
+            color={theme.colors.gray}
+            fontSize={theme.fontSizes.body}
+            letterSpacing={theme.letterSpacing.body}
+            lineHeight={theme.lineHeights[0]}
+          >
+            {countInvoices(invoices)}
+          </Typography>
         </div>
         <ButtonsContainer>
           <Filter filter={filterStatus} setFilter={setFilterStatus} />
@@ -96,6 +105,7 @@ const InvoiceList = ({ modal }) => {
 
 const ButtonsContainer = styled.div`
   display: flex;
+  gap: 0.5em;
   flex: 1;
   justify-content: flex-end;
   align-items: center;

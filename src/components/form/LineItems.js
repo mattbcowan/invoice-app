@@ -51,12 +51,7 @@ const LineItems = ({ control, register, setValue }) => {
             </li>
           ))}
         </StyledList>
-        <Button
-          width={"100%"}
-          backgroundColor={"#F9FAFE"}
-          color={"#7E88C3"}
-          onClick={() => append()}
-        >
+        <Button width={"100%"} variant="secondary" onClick={() => append()}>
           + Add New Item
         </Button>
       </div>

@@ -196,7 +196,10 @@ const InvoiceForm = ({ modal }) => {
           <ButtonsContainer>
             {isAddMode ? (
               <ButtonGroup>
-                <Button variant="danger" onClick={() => modal.current.close()}>
+                <Button
+                  variant="secondary"
+                  onClick={() => modal.current.close()}
+                >
                   Discard
                 </Button>
                 <Button
@@ -214,8 +217,15 @@ const InvoiceForm = ({ modal }) => {
               </ButtonGroup>
             ) : (
               <ButtonGroup>
-                <Button onClick={() => modal.current.close()}>Cancel</Button>
-                <Button type="submit">Save Changes</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => modal.current.close()}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" variant="primary">
+                  Save Changes
+                </Button>
               </ButtonGroup>
             )}
           </ButtonsContainer>
@@ -255,7 +265,8 @@ const ButtonsContainer = styled.div`
 
 const ButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 1em;
+  justify-content: flex-end;
   align-items: center;
   background-color: #ffffff;
   margin: 2em;
