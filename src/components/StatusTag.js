@@ -9,7 +9,7 @@ export const StatusTag = styled("div")(
     boxSizing: "border-box",
     display: "inline-block",
     textAlign: "center",
-    maxWidth: "104px",
+    minWidth: "104px",
     maxHeight: "40px",
     lineHeight: theme.lineHeights[0],
     letterSpacing: theme.letterSpacing[1],
