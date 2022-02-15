@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { auth, db, saveInvoice } from "../../firebase";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LineItems from "./LineItems";
 import { invoiceSchema } from "../../schema";
-import { useLocation } from "react-router-dom";
-import { get, ref } from "firebase/database";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../Button";
 import TextField from "./TextField";
 import Dropdown from "./Dropdown";
 import theme from "../../theme/theme";
 import { Typography } from "../Typography";
+import { useStateValue } from "../../StateProvider";
+import { createInvoiceNumber } from "../../formatting";
+import { getDatabase, ref, set } from "firebase/database";
 
 const Header = ({ children }) => {
   return (
@@ -31,8 +32,12 @@ const Header = ({ children }) => {
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
   const invoiceId = location.pathname.slice(10, 16);
+  const [{ user, invoices }, dispatch] = useStateValue();
+  const invoice = invoices.find((x) => x.id === invoiceId);
   const [loading, setLoading] = useState(null);
   const invoiceDate = new Date(Date.now());
+  const navigate = useNavigate();
+  const db = getDatabase();
   const isAddMode = !invoiceId;
   const {
     control,
@@ -47,6 +52,9 @@ const InvoiceForm = ({ modal }) => {
     defaultValues: {
       status: "Pending",
       line_items: [],
+      bill_to_info: {
+        invoice_date: invoiceDate.toDateString().slice(4),
+      },
     },
   });
 
@@ -54,36 +62,27 @@ const InvoiceForm = ({ modal }) => {
     setLoading(true);
 
     if (!isAddMode && invoiceId !== "") {
-      const userRef = ref(
-        db,
-        `users/${auth.currentUser.uid}/invoices/${invoiceId}`
-      );
-      get(userRef)
-        .then((snapshot) => {
-          return snapshot.val();
-        })
-        .then((res) => {
-          const fields = [
-            "bill_from_info",
-            "bill_to_info",
-            "status",
-            "line_items",
-          ];
-          fields.forEach((field) => setValue(field, res[field]));
-        });
+      const fields = ["bill_from_info", "bill_to_info", "status", "line_items"];
+      fields.forEach((field) => setValue(field, invoice[field]));
     }
     setLoading(false);
   }, [isAddMode, invoiceId, setValue]);
+
+  const onSubmit = (data) => {
+    const invoiceNum = createInvoiceNumber(invoices.length + 1);
+    const newInvoice = { ...data, id: invoiceNum };
+    set(ref(db, `users/${user.uid}/invoices/`), [...invoices, newInvoice]);
+    dispatch({
+      type: "ADD_INVOICE",
+      invoice: newInvoice,
+    });
+  };
 
   return (
     <Wrapper>
       {loading && <p>Loading...</p>}
       {
-        <form
-          onSubmit={handleSubmit((data) => {
-            saveInvoice(data, isAddMode, invoiceId);
-          })}
-        >
+        <form onSubmit={handleSubmit(onSubmit)}>
           <FieldContainer>
             {isAddMode ? (
               <Header>New Invoice</Header>
@@ -172,7 +171,6 @@ const InvoiceForm = ({ modal }) => {
                 register={register}
                 path={"bill_to_info.invoice_date"}
                 label={"Invoice Date"}
-                value={invoiceDate.toDateString()}
                 disabled={true}
               />
               <Dropdown
@@ -195,48 +193,12 @@ const InvoiceForm = ({ modal }) => {
                 path={"bill_to_info.project_description"}
                 label={"Project Description"}
               />
+              <LineItems
+                {...{ control, watch, register, getValues, setValue, errors }}
+              />
             </StyledFieldset>
-            <LineItems
-              {...{ control, watch, register, getValues, setValue, errors }}
-            />
           </FieldContainer>
-          <ButtonsContainer>
-            {isAddMode ? (
-              <ButtonGroup>
-                <Button
-                  variant="secondary"
-                  onClick={() => modal.current.close()}
-                >
-                  Discard
-                </Button>
-                <Button
-                  variant="tertiary"
-                  onClick={setValue("status", "Draft")}
-                >
-                  Save as Draft
-                </Button>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  onClick={setValue("status", "Pending")}
-                >
-                  Save & Send
-                </Button>
-              </ButtonGroup>
-            ) : (
-              <ButtonGroup>
-                <Button
-                  variant="secondary"
-                  onClick={() => modal.current.close()}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" variant="primary">
-                  Save Changes
-                </Button>
-              </ButtonGroup>
-            )}
-          </ButtonsContainer>
+          <input type="submit" />
         </form>
       }
     </Wrapper>

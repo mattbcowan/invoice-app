@@ -1,15 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { deleteInvoice, markAsPaid } from "../../firebase";
+import { saveInvoice } from "../../firebase";
 import { Button } from "../Button";
 
-const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
+const ButtonBar = ({ modal, invoiceId, invoice }) => {
+  const navigate = useNavigate();
   const handlePaid = () => {
-    setInvoice({ ...invoice, status: "Paid" });
-    setInvoice((state) => {
-      markAsPaid(state, invoiceId);
-      return state;
-    });
+    saveInvoice({ ...invoice, status: "Paid" }, false, invoiceId);
+  };
+
+  const handleDelete = () => {
+    saveInvoice({ ...invoice, status: "Delete" }, false, invoiceId);
   };
 
   return (
@@ -19,9 +21,10 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
       </Button>
       <Button
         variant="danger"
-        onClick={() =>
-          deleteInvoice(invoiceId).then(() => navigate("/invoices"))
-        }
+        onClick={() => {
+          handleDelete();
+          navigate("/invoices");
+        }}
       >
         Delete
       </Button>
@@ -34,6 +37,7 @@ const ButtonBar = ({ modal, invoiceId, setInvoice, invoice, navigate }) => {
           variant="primary"
           onClick={() => {
             handlePaid();
+            navigate("/invoices");
           }}
         >
           Mark As Paid
