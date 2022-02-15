@@ -26,7 +26,6 @@ const Dropdown = ({
   const setSelection = (selection) => {
     setTitle(selection);
     setValue(`${path}`, selection);
-    console.log(selection);
     setIsOpen(false);
   };
 
