@@ -11,14 +11,36 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
 import GlobalStyle from "./theme/globalStyles";
 import Header from "./components/Header";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { useStateValue } from "./StateProvider";
+import { child, get, ref } from "firebase/database";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const modal = useRef(null);
   const [{}, dispatch] = useStateValue();
+
+  const fetchInvoices = (userId) => {
+    const dbRef = ref(db);
+
+    get(child(dbRef, `users/${userId}/invoices`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const objArr = Object.entries(snapshot.val()).map((e) => e[1]);
+
+          dispatch({
+            type: "SET_INVOICES",
+            invoices: objArr,
+          });
+        } else {
+          console.log("No data");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -31,6 +53,7 @@ function App() {
           type: "SET_USER",
           user: user,
         });
+        fetchInvoices(user.uid);
       }
       setLoading(false);
     });
