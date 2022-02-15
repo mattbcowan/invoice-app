@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { onValue, ref } from "firebase/database";
 import { GoPrimitiveDot } from "react-icons/go";
-import { auth, db } from "../../firebase";
 import ShadowBox from "../ShadowBox";
 import ButtonBar from "./ButtonBar";
 import LineItemsBox from "./LineItemsBox";
@@ -12,6 +10,7 @@ import { StatusTag } from "../StatusTag";
 import { Typography } from "../Typography";
 import theme from "../../theme/theme";
 import styled from "styled-components";
+import { useStateValue } from "../../StateProvider";
 
 const LargeText = ({ children }) => {
   return (
@@ -58,27 +57,13 @@ const Address = ({ children, spacing }) => {
 };
 
 const Invoice = ({ modal }) => {
-  const [invoice, setInvoice] = useState(null);
-  const [loading, setLoading] = useState(true);
   let { invoiceId } = useParams();
+  const [{ invoices }, dispatch] = useStateValue();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLoading(true);
-    const userRef = ref(
-      db,
-      `users/${auth.currentUser.uid}/invoices/${invoiceId}`
-    );
-    onValue(userRef, (snapshot) => {
-      const data = snapshot.val();
-      setInvoice(data);
-      setLoading(false);
-    });
-  }, [invoiceId]);
+  const invoice = invoices.find((x) => x.id === invoiceId);
 
   return (
     <Box>
-      {loading && <p>Loading...</p>}
       {invoice && (
         <div>
           <BackButton navigate={navigate} />
@@ -148,13 +133,7 @@ const Invoice = ({ modal }) => {
             </Grid>
             <LineItemsBox invoice={invoice} />
           </ShadowBox>
-          <ButtonBar
-            modal={modal}
-            invoiceId={invoiceId}
-            invoice={invoice}
-            setInvoice={setInvoice}
-            navigate={navigate}
-          />
+          <ButtonBar modal={modal} invoiceId={invoiceId} invoice={invoice} />
         </div>
       )}
     </Box>
