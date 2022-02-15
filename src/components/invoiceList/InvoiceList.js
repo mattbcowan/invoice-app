@@ -1,6 +1,4 @@
-import { db, auth } from "../../firebase";
 import React, { useEffect, useState } from "react";
-import { onValue, ref } from "firebase/database";
 import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
@@ -10,10 +8,11 @@ import { IconContext } from "react-icons";
 import { Box, Grid } from "../Box";
 import { Typography } from "../Typography";
 import theme from "../../theme/theme";
+import { useStateValue } from "../../StateProvider";
 
 const InvoiceList = ({ modal }) => {
-  const [invoices, setInvoices] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [{ invoices }, dispatch] = useStateValue();
+  const [invoiceQty, setInvoiceQty] = useState(0);
   const [filterStatus, setFilterStatus] = useState([
     {
       value: "draft",
@@ -29,29 +28,31 @@ const InvoiceList = ({ modal }) => {
     },
   ]);
 
-  useEffect(() => {
-    setLoading(true);
-    const userRef = ref(db, `users/${auth.currentUser.uid}/invoices`);
-    onValue(userRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data !== null) {
-        setInvoices(Object.entries(data));
-      }
-      setLoading(false);
+  const getFilteredInvoices = () => {
+    const filteredInvoices = invoices.filter((invoice) => {
+      let filters = filterStatus.map((value) => {
+        return value.label;
+      });
+      const status = invoice.status;
+      return filters.includes(status);
     });
-  }, []);
+    return filteredInvoices;
+  };
 
-  const countInvoices = (invoices) => {
-    if (invoices === null) {
+  const countInvoices = (invoiceQty) => {
+    if (invoiceQty === 0) {
       return "No invoices";
     }
-    const invoiceQty = Object.keys(invoices).length;
     if (invoiceQty === 1) {
       return "1 Invoice";
     } else {
       return `${invoiceQty} Invoices`;
     }
   };
+
+  useEffect(() => {
+    setInvoiceQty(getFilteredInvoices().length);
+  });
 
   return (
     <Box m={4}>
@@ -64,7 +65,7 @@ const InvoiceList = ({ modal }) => {
             letterSpacing={theme.letterSpacing.body}
             lineHeight={theme.lineHeights[0]}
           >
-            {countInvoices(invoices)}
+            {countInvoices(invoiceQty)}
           </Typography>
         </div>
         <ButtonsContainer>
@@ -83,21 +84,22 @@ const InvoiceList = ({ modal }) => {
           </Button>
         </ButtonsContainer>
       </Grid>
-      {loading && <p>Loading...</p>}
-      {!invoices && <p>No Invoices!</p>}
-      {invoices && (
+      {invoices.length > 0 ? (
         <Grid display="grid" gridTemplateColumns="1fr" gridGap={3}>
           {invoices
             .filter((invoice) => {
               let filters = filterStatus.map((value) => {
                 return value.label;
               });
-              return filters.includes(invoice[1].status);
+              const status = invoice.status;
+              return filters.includes(status);
             })
-            .map((invoice) => (
-              <InvoiceListCard key={invoice} invoice={invoice} />
+            .map((invoice, i) => (
+              <InvoiceListCard key={i} invoice={invoice} />
             ))}
         </Grid>
+      ) : (
+        <p>No Invoices!</p>
       )}
     </Box>
   );
