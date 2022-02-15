@@ -23,7 +23,7 @@ const getTotal = (prices) => {
 
 const InvoiceListCard = ({ invoice }) => {
   return (
-    <ActionBox to={invoice[0]}>
+    <ActionBox to={invoice.id}>
       <ShadowBox p={4}>
         <Grid
           display="grid"
@@ -38,7 +38,7 @@ const InvoiceListCard = ({ invoice }) => {
             color={theme.colors.black}
           >
             <Hash>#</Hash>
-            {invoice[0]}
+            {invoice.id}
           </Typography>
           <Typography
             fontSize={theme.fontSizes.body}
@@ -48,7 +48,7 @@ const InvoiceListCard = ({ invoice }) => {
             color={"#858bb2"}
             textAlign={"right"}
           >
-            {invoice[1].bill_to_info.client_name}
+            {invoice.bill_to_info.client_name}
           </Typography>
           <div>
             <Typography
@@ -60,9 +60,7 @@ const InvoiceListCard = ({ invoice }) => {
               my={3}
             >
               Due:{" "}
-              {convertDateToString(
-                new Date(invoice[1].bill_to_info.invoice_date)
-              )}
+              {convertDateToString(new Date(invoice.bill_to_info.invoice_date))}
             </Typography>
             <Typography
               fontSize={theme.fontSizes.h2}
@@ -71,12 +69,12 @@ const InvoiceListCard = ({ invoice }) => {
               lineHeight={theme.lineHeights[0]}
               color={theme.colors.black}
             >
-              <Currency value={getTotal(invoice[1].line_items)} />
+              <Currency value={getTotal(invoice.line_items)} />
             </Typography>
           </div>
           <Flexbox display="flex" alignItems="center" justifyContent="flex-end">
-            <StatusTag variant={invoice[1].status.toLowerCase()}>
-              <GoPrimitiveDot /> {invoice[1].status}
+            <StatusTag variant={invoice.status.toLowerCase()}>
+              <GoPrimitiveDot /> {invoice.status}
             </StatusTag>
           </Flexbox>
         </Grid>
