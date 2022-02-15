@@ -51,7 +51,12 @@ const LineItems = ({ control, register, setValue }) => {
             </li>
           ))}
         </StyledList>
-        <Button width={"100%"} variant="secondary" onClick={() => append()}>
+        <Button
+          width={"100%"}
+          variant="secondary"
+          type="button"
+          onClick={() => append()}
+        >
           + Add New Item
         </Button>
       </div>
@@ -82,6 +87,7 @@ const Grid = styled.div`
 
 const Wrapper = styled.div`
   margin-bottom: 5em;
+  width: 100%;
 `;
 
 const DeleteButton = styled.button`
