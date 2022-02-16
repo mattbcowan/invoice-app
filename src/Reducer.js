@@ -28,7 +28,7 @@ const reducer = (state, action) => {
       };
     case "UPDATE_INVOICE":
       const index = state.invoices.findIndex(
-        (obj) => obj.id == action.invoice.id
+        (obj) => obj.id === action.invoice.id
       );
 
       const updates = {};
