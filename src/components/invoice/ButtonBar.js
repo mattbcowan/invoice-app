@@ -1,17 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { saveInvoice } from "../../firebase";
+import { useStateValue } from "../../StateProvider";
 import { Button } from "../Button";
 
-const ButtonBar = ({ modal, invoiceId, invoice }) => {
+const ButtonBar = ({ modal, invoice }) => {
   const navigate = useNavigate();
+  const [{}, dispatch] = useStateValue();
   const handlePaid = () => {
-    saveInvoice({ ...invoice, status: "Paid" }, false, invoiceId);
+    dispatch({
+      type: "UPDATE_INVOICE",
+      invoice: { ...invoice, status: "Paid" },
+    });
   };
 
   const handleDelete = () => {
-    saveInvoice({ ...invoice, status: "Delete" }, false, invoiceId);
+    dispatch({
+      type: "UPDATE_INVOICE",
+      invoice: { ...invoice, status: "Delete" },
+    });
+    navigate("/invoices");
+  };
+
+  const handleSend = () => {
+    dispatch({
+      type: "UPDATE_INVOICE",
+      invoice: { ...invoice, status: "Pending" },
+    });
   };
 
   return (
@@ -19,27 +34,15 @@ const ButtonBar = ({ modal, invoiceId, invoice }) => {
       <Button variant="secondary" onClick={() => modal.current.open()}>
         Edit
       </Button>
-      <Button
-        variant="danger"
-        onClick={() => {
-          handleDelete();
-          navigate("/invoices");
-        }}
-      >
+      <Button variant="danger" onClick={handleDelete}>
         Delete
       </Button>
-      {invoice.status === "Paid" ? (
-        <Button variant="primary" disabled>
-          Mark As Paid
+      {invoice.status === "Draft" ? (
+        <Button variant="primary" onClick={handleSend}>
+          Send Invoice
         </Button>
       ) : (
-        <Button
-          variant="primary"
-          onClick={() => {
-            handlePaid();
-            navigate("/invoices");
-          }}
-        >
+        <Button variant="primary" onClick={handlePaid}>
           Mark As Paid
         </Button>
       )}
