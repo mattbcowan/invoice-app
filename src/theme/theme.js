@@ -25,7 +25,7 @@ const theme = {
     lightGray: "#DFE3FA",
     offWhite: "#F8F8FB",
     red: "#EC5757",
-    lightRed: "#9277FF",
+    lightRed: "#FF9797",
   },
   radii,
 };

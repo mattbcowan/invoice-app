@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         (obj) => obj.id === action.invoice.id
       );
 
-      const updates = {};
+      let updates = {};
       updates[`users/${state.user.uid}/invoices/${index}`] = action.invoice;
       update(ref(db), updates);
       let newState = [...state.invoices];
