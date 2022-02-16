@@ -85,10 +85,12 @@ const InvoiceListCard = ({ invoice }) => {
 
 const ActionBox = styled(Link)`
   text-decoration: none;
+  transition: 250ms ease;
+  border-radius: ${theme.radii[2]};
 
   &:hover {
-    outline: 1px solid ${theme.colors.darkPurple};
-    border-radius: ${theme.radii[2]};
+    transition: 250ms ease;
+    outline: 2px solid ${theme.colors.darkPurple};
   }
 `;
 
