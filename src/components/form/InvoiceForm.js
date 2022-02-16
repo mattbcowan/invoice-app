@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LineItems from "./LineItems";
 import { invoiceSchema } from "../../schema";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../Button";
 import TextField from "./TextField";
@@ -11,7 +11,6 @@ import Dropdown from "./Dropdown";
 import theme from "../../theme/theme";
 import { Typography } from "../Typography";
 import { useStateValue } from "../../StateProvider";
-import { createInvoiceNumber } from "../../formatting";
 
 const Header = ({ children }) => {
   return (
@@ -31,11 +30,10 @@ const Header = ({ children }) => {
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
   const invoiceId = location.pathname.slice(10, 16);
-  const [{ user, invoices }, dispatch] = useStateValue();
+  const [{ invoices }, dispatch] = useStateValue();
   const invoice = invoices.find((x) => x.id === invoiceId);
   const [loading, setLoading] = useState(null);
   const invoiceDate = new Date(Date.now());
-  const navigate = useNavigate();
   const isAddMode = !invoiceId;
   const {
     control,
@@ -72,11 +70,13 @@ const InvoiceForm = ({ modal }) => {
         type: "ADD_INVOICE",
         invoice: data,
       });
+      modal.current.close();
     } else {
       dispatch({
         type: "UPDATE_INVOICE",
         invoice: { ...data, id: invoiceId },
       });
+      modal.current.close();
     }
   };
 
@@ -209,7 +209,11 @@ const InvoiceForm = ({ modal }) => {
               >
                 Discard
               </Button>
-              <Button type="button" variant="tertiary">
+              <Button
+                type="submit"
+                variant="tertiary"
+                onClick={() => setValue("status", "Draft")}
+              >
                 Save as Draft
               </Button>
               <Button type="submit" variant="primary">
@@ -266,16 +270,6 @@ const ButtonsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 1em;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 1em;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: #ffffff;
-  margin: 2em;
-  padding-top: 2em;
 `;
 
 export default InvoiceForm;
