@@ -12,7 +12,6 @@ import theme from "../../theme/theme";
 import { Typography } from "../Typography";
 import { useStateValue } from "../../StateProvider";
 import { createInvoiceNumber } from "../../formatting";
-import { getDatabase, ref, set } from "firebase/database";
 
 const Header = ({ children }) => {
   return (
@@ -37,7 +36,6 @@ const InvoiceForm = ({ modal }) => {
   const [loading, setLoading] = useState(null);
   const invoiceDate = new Date(Date.now());
   const navigate = useNavigate();
-  const db = getDatabase();
   const isAddMode = !invoiceId;
   const {
     control,
@@ -69,13 +67,17 @@ const InvoiceForm = ({ modal }) => {
   }, [isAddMode, invoiceId, setValue]);
 
   const onSubmit = (data) => {
-    const invoiceNum = createInvoiceNumber(invoices.length + 1);
-    const newInvoice = { ...data, id: invoiceNum };
-    set(ref(db, `users/${user.uid}/invoices/`), [...invoices, newInvoice]);
-    dispatch({
-      type: "ADD_INVOICE",
-      invoice: newInvoice,
-    });
+    if (isAddMode) {
+      dispatch({
+        type: "ADD_INVOICE",
+        invoice: data,
+      });
+    } else {
+      dispatch({
+        type: "UPDATE_INVOICE",
+        invoice: { ...data, id: invoiceId },
+      });
+    }
   };
 
   return (
@@ -198,7 +200,36 @@ const InvoiceForm = ({ modal }) => {
               />
             </StyledFieldset>
           </FieldContainer>
-          <input type="submit" />
+          {isAddMode ? (
+            <ButtonsContainer>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => modal.current.close()}
+              >
+                Discard
+              </Button>
+              <Button type="button" variant="tertiary">
+                Save as Draft
+              </Button>
+              <Button type="submit" variant="primary">
+                Save & Send
+              </Button>
+            </ButtonsContainer>
+          ) : (
+            <ButtonsContainer>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => modal.current.close()}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" variant="primary">
+                Save Changes
+              </Button>
+            </ButtonsContainer>
+          )}
         </form>
       }
     </Wrapper>
@@ -231,6 +262,10 @@ const StyledFieldset = styled.fieldset`
 const ButtonsContainer = styled.div`
   width: 100%;
   background-color: #ffffff;
+  padding: 1.5em;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
 `;
 
 const ButtonGroup = styled.div`
