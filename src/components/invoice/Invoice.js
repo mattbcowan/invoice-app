@@ -7,53 +7,20 @@ import LineItemsBox from "./LineItemsBox";
 import BackButton from "../BackButton";
 import { Box, Grid } from "../Box";
 import { StatusTag } from "../StatusTag";
-import { Typography } from "../Typography";
 import theme from "../../theme/theme";
 import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
 
 const LargeText = ({ children }) => {
-  return (
-    <Typography
-      fontSize={"15px"}
-      fontWeight={theme.fontWeights.bold}
-      letterSpacing={theme.letterSpacing[1]}
-      lineHeight={theme.lineHeights[0]}
-      color={"black"}
-    >
-      {children}
-    </Typography>
-  );
+  return <span>{children}</span>;
 };
 
 const Header = ({ children, spacing }) => {
-  return (
-    <Typography
-      fontSize={theme.fontSizes.body}
-      fontWeight={theme.fontWeights.normal}
-      letterSpacing={theme.letterSpacing[1]}
-      lineHeight={theme.lineHeights[0]}
-      color={"lightPurpleGray"}
-      mb={spacing || 2}
-    >
-      {children}
-    </Typography>
-  );
+  return <span>{children}</span>;
 };
 
 const Address = ({ children, spacing }) => {
-  return (
-    <Typography
-      fontSize={theme.fontSizes.body2}
-      fontWeight={theme.fontWeights.normal}
-      letterSpacing={theme.letterSpacing[0]}
-      lineHeight={theme.lineHeights[3]}
-      color={"lightPurpleGray"}
-      my={spacing}
-    >
-      {children}
-    </Typography>
-  );
+  return <span>{children}</span>;
 };
 
 const Invoice = ({ modal }) => {
@@ -76,14 +43,14 @@ const Invoice = ({ modal }) => {
             justifyContent="space-between"
           >
             <Header spacing="0">Status</Header>
-            <StatusTag variant={invoice.status.toLowerCase()}>
+            <StatusTag tagStatus={invoice.status.toLowerCase()}>
               <GoPrimitiveDot /> {invoice.status}
             </StatusTag>
           </ShadowBox>
           <ShadowBox p={4} m={4}>
             <Grid display="grid" gridTemplateColumns="1fr 1fr" gridGap="1em">
               <Box>
-                <Typography
+                <span
                   fontSize={theme.fontSizes.body}
                   fontWeight={theme.fontWeights.bold}
                   letterSpacing={theme.letterSpacing[1]}
@@ -93,7 +60,7 @@ const Invoice = ({ modal }) => {
                 >
                   <Hash>#</Hash>
                   {invoiceId}
-                </Typography>
+                </span>
                 <Header>{invoice.bill_to_info.project_description}</Header>
                 <Address spacing={4}>
                   {invoice.bill_from_info.street_name}

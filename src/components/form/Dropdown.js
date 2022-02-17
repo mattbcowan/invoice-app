@@ -32,15 +32,7 @@ const Dropdown = ({
   return (
     <Box width={width}>
       <Hidden type="text" {...register(path)} value={value} />
-      <Typography
-        fontSize={theme.fontSizes.body}
-        fontWeight={theme.fontWeights.normal}
-        letterSpacing={theme.letterSpacing[1]}
-        lineHeight={theme.lineHeights[0]}
-        color={"lightPurpleGray"}
-      >
-        {label}
-      </Typography>
+      <span>{label}</span>
       <Box>
         <Title width={"100%"} p={12} my={2} type="button" onClick={toggleList}>
           <div>

@@ -1,18 +1,4 @@
-const fontSizes = [11, 12, 16, 20, 32];
-const fontWeights = [500, 700];
-const lineHeights = [1, 1.125, 1.25, 1.5];
-const letterSpacing = [-0.23, -0.25, -0.63, -0.8, -1];
-const radii = ["0px", "4px", "8px", "16px", "48px"];
-const space = [0, 4, 8, 16, 24, 32, 48, 64, 128, 256, 512];
-
 const theme = {
-  breakpoints: [32, 48, 64],
-  space,
-  fontSizes,
-  fontWeights,
-  lineHeights,
-  letterSpacing,
-  fontFamily: "Spartan, sans-serif",
   colors: {
     darkPurple: "#7C5DFA",
     purple: "#9277FF",
@@ -23,37 +9,46 @@ const theme = {
     purpleGray: "#252945",
     gray: "#888EB0",
     lightGray: "#DFE3FA",
+    grayBlue: "#858BB2",
     offWhite: "#F8F8FB",
     red: "#EC5757",
     lightRed: "#FF9797",
   },
-  radii,
+  fontSizes: {
+    body1: "12px",
+    body2: "11px",
+    h1: "32px",
+    h2: "20px",
+    h3: "16px",
+    h4: "12px",
+  },
+  fontWeights: { regular: 500, bold: 700 },
+  lineHeights: {
+    body1: "15px",
+    body2: "18px",
+    h1: "36px",
+    h2: "22px",
+    h3: "24px",
+    h4: "15px",
+  },
+  status: {
+    pending: {
+      color: "#ff8f00",
+      background: "rgba(255, 143, 0, 0.06)",
+    },
+    paid: {
+      color: "#33d69f",
+      background: "rgba(51, 214, 159, 0.06)",
+    },
+    draft: {
+      color: "#373b53",
+      background: "rgba(55, 59, 83, 0.06)",
+    },
+  },
+  letterSpacing: [-0.23, -0.25, -0.63, -0.8, -1],
+  radii: ["0px", "4px", "8px", "16px", "48px"],
+  space: [0, 4, 8, 16, 24, 32, 48, 64, 128, 256, 512],
+  breakpoints: ["40em", "52em", "64em", "80em"],
 };
-
-// Fonts
-theme.fontSizes.body = fontSizes[1];
-theme.fontSizes.body2 = fontSizes[0];
-theme.fontSizes.h1 = fontSizes[4];
-theme.fontSizes.h2 = fontSizes[3];
-theme.fontSizes.h3 = fontSizes[2];
-theme.fontSizes.h4 = fontSizes[1];
-
-theme.letterSpacing.body = letterSpacing[1];
-theme.letterSpacing.body2 = letterSpacing[0];
-theme.letterSpacing.h1 = letterSpacing[4];
-theme.letterSpacing.h2 = letterSpacing[2];
-theme.letterSpacing.h3 = letterSpacing[3];
-theme.letterSpacing.h4 = letterSpacing[1];
-
-theme.fontWeights.normal = fontWeights[0];
-theme.fontWeights.bold = fontWeights[1];
-
-// Space
-theme.space.zero = space[0];
-theme.space.small = space[1];
-theme.space.medium = space[2];
-theme.space.large = space[3];
-theme.space.xlarge = space[4];
-theme.space.xxlarge = space[5];
 
 export default theme;

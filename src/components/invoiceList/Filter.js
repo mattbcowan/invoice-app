@@ -82,16 +82,22 @@ const Filter = ({ filter, setFilter }) => {
 
 const Dropdown = ({ target, isOpen, children }) => {
   return (
-    <div>
+    <DropdownContainer>
       {target}
       {isOpen ? <div>{children}</div> : null}
-    </div>
+    </DropdownContainer>
   );
 };
 
-const FilterButton = styled.a({
-  fontSize: theme.fontSizes.body,
-  fontWeight: theme.fontWeights.bold,
-});
+const DropdownContainer = styled.div`
+  justify-self: end;
+`;
+
+const FilterButton = styled.a`
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  font-weight: 700;
+`;
 
 export default Filter;

@@ -13,18 +13,7 @@ import { Typography } from "../Typography";
 import { useStateValue } from "../../StateProvider";
 
 const Header = ({ children }) => {
-  return (
-    <Typography
-      fontSize={24}
-      fontWeight={theme.fontWeights.bold}
-      letterSpacing={theme.letterSpacing[2]}
-      lineHeight={theme.lineHeights[0]}
-      color={theme.colors.black}
-      m={3}
-    >
-      {children}
-    </Typography>
-  );
+  return <span>{children}</span>;
 };
 
 const InvoiceForm = ({ modal }) => {

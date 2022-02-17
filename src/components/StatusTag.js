@@ -1,37 +1,17 @@
 import styled from "styled-components";
-import { variant } from "styled-system";
-import theme from "../theme/theme";
 
-export const StatusTag = styled("div")(
-  {
-    appearance: "none",
-    fontFamily: "inherit",
-    boxSizing: "border-box",
-    display: "inline-block",
-    textAlign: "center",
-    minWidth: "104px",
-    maxHeight: "40px",
-    lineHeight: theme.lineHeights[0],
-    letterSpacing: theme.letterSpacing[1],
-    fontSize: theme.fontSizes[1],
-    fontWeight: theme.fontWeights[1],
-    borderRadius: theme.radii[2],
-    padding: theme.space[3],
-  },
-  variant({
-    variants: {
-      pending: {
-        color: "#ff8f00",
-        bg: "rgba(255, 143, 0, 0.06)",
-      },
-      paid: {
-        color: "#33d69f",
-        bg: "rgba(51, 214, 159, 0.06)",
-      },
-      draft: {
-        color: "#373b53",
-        bg: "rgba(55, 59, 83, 0.06)",
-      },
-    },
-  })
-);
+export const StatusTag = styled.div`
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  min-width: 104px;
+  max-height: 40px;
+  padding: 16px;
+  border-radius: ${({ theme }) => theme.radii[2]};
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  line-height: ${({ theme }) => theme.lineHeights.body1};
+  letter-spacing: ${({ theme }) => theme.letterSpacing[1]};
+  background: ${({ theme, tagStatus }) => theme.status[tagStatus].background};
+  color: ${({ theme, tagStatus }) => theme.status[tagStatus].color};
+`;

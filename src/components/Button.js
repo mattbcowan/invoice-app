@@ -24,6 +24,11 @@ export const Button = styled("button")(
           bg: theme.colors.purple,
           transition: "300ms ease-out",
         },
+        "&:disabled": {
+          bg: theme.colors.purple,
+          transition: "none",
+          cursor: "not-allowed",
+        },
       },
       primaryIcon: {
         color: "#ffffff",

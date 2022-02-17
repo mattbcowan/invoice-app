@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
-import { Button } from "../Button";
+import { DangerButton, PrimaryButton, SecondaryButton } from "../styled/Button";
 
 const ButtonBar = ({ modal, invoice }) => {
   const navigate = useNavigate();
@@ -31,20 +31,22 @@ const ButtonBar = ({ modal, invoice }) => {
 
   return (
     <ButtonContainer>
-      <Button variant="secondary" onClick={() => modal.current.open()}>
+      <SecondaryButton dark={false} onClick={() => modal.current.open()}>
         Edit
-      </Button>
-      <Button variant="danger" onClick={handleDelete}>
+      </SecondaryButton>
+      <DangerButton dark={false} onClick={handleDelete}>
         Delete
-      </Button>
+      </DangerButton>
       {invoice.status === "Draft" ? (
-        <Button variant="primary" onClick={handleSend}>
-          Send Invoice
-        </Button>
+        <PrimaryButton onClick={handleSend}>Send Invoice</PrimaryButton>
       ) : (
-        <Button variant="primary" onClick={handlePaid}>
+        <PrimaryButton
+          disabled={invoice.status === "Paid"}
+          onClick={handlePaid}
+          dark={false}
+        >
           Mark As Paid
-        </Button>
+        </PrimaryButton>
       )}
     </ButtonContainer>
   );

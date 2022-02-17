@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { GoPrimitiveDot } from "react-icons/go";
 import ShadowBox from "../ShadowBox";
 import { StatusTag } from "../StatusTag";
-import { Flexbox, Grid } from "../Box";
 import Currency from "../Currency";
-import { Typography } from "../Typography";
+import { Body1, H1, H3 } from "../Typography";
 import theme from "../../theme/theme";
 
 const convertDateToString = (date) => {
@@ -25,68 +24,112 @@ const InvoiceListCard = ({ invoice }) => {
   return (
     <ActionBox to={invoice.id}>
       <ShadowBox p={4}>
-        <Grid
-          display="grid"
-          gridTemplateColumns="2fr 1fr"
-          gridTemplateRows="1fr 2fr"
-        >
-          <Typography
-            fontSize={theme.fontSizes.body}
-            fontWeight={theme.fontWeights.bold}
-            letterSpacing={theme.letterSpacing[1]}
-            lineHeight={theme.lineHeights[0]}
-            color={theme.colors.black}
-          >
+        <Container>
+          <InvoiceNumber>
             <Hash>#</Hash>
             {invoice.id}
-          </Typography>
-          <Typography
-            fontSize={theme.fontSizes.body}
-            fontWeight={theme.fontWeights.normal}
-            letterSpacing={theme.letterSpacing[1]}
-            lineHeight={theme.lineHeights[0]}
-            color={"#858bb2"}
-            textAlign={"right"}
-          >
-            {invoice.bill_to_info.client_name}
-          </Typography>
-          <div>
-            <Typography
-              fontSize={theme.fontSizes.body}
-              fontWeight={theme.fontWeights.normal}
-              letterSpacing={theme.letterSpacing[1]}
-              lineHeight={theme.lineHeights[0]}
-              color={theme.colors.lightPurpleGray}
-              my={3}
-            >
-              Due:{" "}
-              {convertDateToString(new Date(invoice.bill_to_info.invoice_date))}
-            </Typography>
-            <Typography
-              fontSize={theme.fontSizes.h2}
-              fontWeight={theme.fontWeights.bold}
-              letterSpacing={theme.letterSpacing[3]}
-              lineHeight={theme.lineHeights[0]}
-              color={theme.colors.black}
-            >
-              <Currency value={getTotal(invoice.line_items)} />
-            </Typography>
-          </div>
-          <Flexbox display="flex" alignItems="center" justifyContent="flex-end">
-            <StatusTag variant={invoice.status.toLowerCase()}>
+          </InvoiceNumber>
+          <DueDate>
+            Due{" "}
+            {convertDateToString(new Date(invoice.bill_to_info.invoice_date))}
+          </DueDate>
+          <ClientName>{invoice.bill_to_info.client_name}</ClientName>
+          <Total>
+            <Currency value={getTotal(invoice.line_items)} />
+          </Total>
+          <TagContainer>
+            <StatusTag tagStatus={invoice.status.toLowerCase()}>
               <GoPrimitiveDot /> {invoice.status}
             </StatusTag>
-          </Flexbox>
-        </Grid>
+          </TagContainer>
+        </Container>
       </ShadowBox>
     </ActionBox>
   );
 };
 
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1em;
+  }
+`;
+
+const InvoiceNumber = styled(Body1)`
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.black};
+  order: 1;
+  grid-column: 1/2;
+  grid-row: 1/2;
+
+  @media (min-width: 480px) {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+`;
+
+const DueDate = styled(Body1)`
+  order: 3;
+  grid-column: 1/2;
+  grid-row: 3/4;
+
+  @media (min-width: 480px) {
+    order: 2;
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+`;
+
+const ClientName = styled(Body1)`
+  order: 2;
+  justify-self: end;
+
+  @media (min-width: 480px) {
+    justify-self: stretch;
+    order: 3;
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+`;
+
+const TagContainer = styled.div`
+  order: 4;
+  grid-column: 2/3;
+  grid-row: 3/5;
+  justify-self: end;
+
+  @media (min-width: 480px) {
+    justify-self: stretch;
+    order: 5;
+    grid-column: 5/6;
+    grid-row: 1/2;
+  }
+`;
+
+const Total = styled(H3)`
+  order: 5;
+  grid-column: 1/2;
+  grid-row: 4/5;
+
+  @media (min-width: 480px) {
+    order: 4;
+    grid-column: 4/5;
+    grid-row: 1/2;
+  }
+`;
+
 const ActionBox = styled(Link)`
   text-decoration: none;
   transition: 250ms ease;
   border-radius: ${theme.radii[2]};
+  max-width: 730px;
 
   &:hover {
     transition: 250ms ease;

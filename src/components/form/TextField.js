@@ -3,20 +3,11 @@ import styled from "styled-components";
 import { space, layout } from "styled-system";
 import theme from "../../theme/theme";
 import { Box } from "../Box";
-import { Typography } from "../Typography";
 
 const TextField = ({ register, label, path, width, disabled, value }) => {
   return (
     <Box width={width} my={2}>
-      <Typography
-        fontSize={theme.fontSizes.body}
-        fontWeight={theme.fontWeights.normal}
-        letterSpacing={theme.letterSpacing[1]}
-        lineHeight={theme.lineHeights[0]}
-        color={"lightPurpleGray"}
-      >
-        {label}
-      </Typography>
+      <span>{label}</span>
       <Input
         value={value}
         disabled={disabled}

@@ -6,9 +6,10 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { Button } from "../Button";
 import { IconContext } from "react-icons";
 import { Box, Grid } from "../Box";
-import { Typography } from "../Typography";
+import { Body1, H1 } from "../Typography";
 import theme from "../../theme/theme";
 import { useStateValue } from "../../StateProvider";
+import { IconButton } from "../styled/Button";
 
 const InvoiceList = ({ modal }) => {
   const [{ invoices }, dispatch] = useStateValue();
@@ -55,35 +56,26 @@ const InvoiceList = ({ modal }) => {
   });
 
   return (
-    <Box m={4}>
-      <Grid display="grid" gridTemplateColumns="1fr 1fr" gridGap={1} mb={4}>
+    <Container>
+      <ButtonsContainer>
         <div>
-          <Header>Invoices</Header>
-          <Typography
-            color={theme.colors.gray}
-            fontSize={theme.fontSizes.body}
-            letterSpacing={theme.letterSpacing.body}
-            lineHeight={theme.lineHeights[0]}
-          >
-            {countInvoices(invoiceQty)}
-          </Typography>
+          <InvoiceHeader>Invoices</InvoiceHeader>
+          <Body1>{}</Body1>
         </div>
-        <ButtonsContainer>
-          <Filter filter={filterStatus} setFilter={setFilterStatus} />
-          <Button variant="primaryIcon" onClick={() => modal.current.open()}>
-            <IconContext.Provider
-              value={{
-                color: "#ffffff",
-                size: "32px",
-                style: { marginRight: "0.4em" },
-              }}
-            >
-              <AiFillPlusCircle />
-            </IconContext.Provider>
-            New
-          </Button>
-        </ButtonsContainer>
-      </Grid>
+        <Filter filter={filterStatus} setFilter={setFilterStatus} />
+        <IconButton onClick={() => modal.current.open()}>
+          <IconContext.Provider
+            value={{
+              color: "#ffffff",
+              size: "32px",
+              style: { marginRight: "0.4em" },
+            }}
+          >
+            <AiFillPlusCircle />
+          </IconContext.Provider>
+          New
+        </IconButton>
+      </ButtonsContainer>
       {invoices.length > 0 ? (
         <Grid display="grid" gridTemplateColumns="1fr" gridGap={3}>
           {invoices
@@ -101,20 +93,35 @@ const InvoiceList = ({ modal }) => {
       ) : (
         <p>No Invoices!</p>
       )}
-    </Box>
+    </Container>
   );
 };
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  gap: 0.5em;
-  flex: 1;
-  justify-content: flex-end;
-  align-items: center;
+const Container = styled.div`
+  max-width: 730px;
+  margin-top: 2em;
 `;
 
-const Header = styled.h2`
+const ButtonsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 2em;
+`;
+
+const InvoiceHeader = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.63px;
+  line-height: 1;
   margin-bottom: 0.25em;
+
+  @media (min-width: 480px) {
+    font-size: 32px;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
 `;
 
 export default InvoiceList;
