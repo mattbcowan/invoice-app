@@ -8,8 +8,6 @@ import styled from "styled-components";
 import { Button } from "../Button";
 import TextField from "./TextField";
 import Dropdown from "./Dropdown";
-import theme from "../../theme/theme";
-import { Typography } from "../Typography";
 import { useStateValue } from "../../StateProvider";
 
 const Header = ({ children }) => {

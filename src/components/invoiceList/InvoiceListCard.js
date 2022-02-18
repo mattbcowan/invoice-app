@@ -5,7 +5,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 import ShadowBox from "../ShadowBox";
 import { StatusTag } from "../StatusTag";
 import Currency from "../Currency";
-import { Body1, H1, H3 } from "../Typography";
+import { Body1, H3 } from "../Typography";
 import theme from "../../theme/theme";
 
 const convertDateToString = (date) => {

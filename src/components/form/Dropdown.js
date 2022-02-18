@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { layout, shadow, space } from "styled-system";
 import theme from "../../theme/theme";
 import { Box, Flexbox } from "../Box";
-import { Typography } from "../Typography";
 import { BiChevronDown } from "react-icons/bi";
 
 const Dropdown = ({
