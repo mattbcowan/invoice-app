@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
 import { IconContext } from "react-icons";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown, BiCheck } from "react-icons/bi";
 import styled from "styled-components";
 import theme from "../../theme/theme";
 
@@ -15,22 +15,30 @@ const filterOptions = [
 ];
 
 const styles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: "#0C0E16",
+    backgroundColor: "white",
+  }),
   control: (provided, state) => ({
     ...provided,
+    minWidth: 192,
+    margin: 8,
     display: "none",
+    textAlign: "left",
   }),
+  menu: () => ({ boxShadow: "inset 0 1px 0 rgba(0, 0, 0, 0.1)" }),
 };
 
 const Option = (props) => {
   return (
     <div>
       <components.Option {...props}>
-        <input
-          type="checkbox"
+        <Checkbox
           checked={props.isSelected}
           onChange={() => null}
+          label={props.label}
         />
-        <label>{props.label}</label>
       </components.Option>
     </div>
   );
@@ -84,13 +92,84 @@ const Dropdown = ({ target, isOpen, children }) => {
   return (
     <DropdownContainer>
       {target}
-      {isOpen ? <div>{children}</div> : null}
+      {isOpen ? <Menu>{children}</Menu> : null}
     </DropdownContainer>
   );
 };
 
+const Checkbox = ({ checked, onChange, label }) => {
+  return (
+    <FormControl>
+      <input
+        type="checkbox"
+        name="checkbox"
+        checked={checked}
+        onChange={onChange}
+      />
+      {label}
+    </FormControl>
+  );
+};
+
+const FormControl = styled.label`
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.75em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  input[type="checkbox"] {
+    appearance: none;
+    margin: 0;
+    background-color: #dfe3fa;
+    font: inherit;
+    width: 1.15em;
+    height: 1.15em;
+    border: 3px solid #7c5dfa;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: #7c5dfa;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #ffffff;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+`;
+
+const Menu = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+  margin-top: 8px;
+  position: absolute;
+  z-index: 2;
+  text-align: left;
+  width: 100%;
+`;
+
 const DropdownContainer = styled.div`
+  position: relative;
   justify-self: end;
+  width: 100%;
+  text-align: right;
 `;
 
 const FilterButton = styled.a`

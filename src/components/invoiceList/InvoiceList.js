@@ -60,7 +60,7 @@ const InvoiceList = ({ modal }) => {
       <ButtonsContainer>
         <div>
           <InvoiceHeader>Invoices</InvoiceHeader>
-          <Body1>{}</Body1>
+          <Body1>{countInvoices(invoices.length)}</Body1>
         </div>
         <Filter filter={filterStatus} setFilter={setFilterStatus} />
         <IconButton onClick={() => modal.current.open()}>
@@ -99,7 +99,12 @@ const InvoiceList = ({ modal }) => {
 
 const Container = styled.div`
   max-width: 730px;
-  margin-top: 2em;
+  margin: 2em;
+
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    margin-top: 2em;
+  }
 `;
 
 const ButtonsContainer = styled.div`
