@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
 import { IconContext } from "react-icons";
-import { BiChevronDown, BiCheck } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
 import styled from "styled-components";
-import theme from "../../theme/theme";
-
-// For when you get to styling the filter
-// https://react-select.com/advanced#experimental
 
 const filterOptions = [
   { value: "draft", label: "Draft" },
@@ -106,10 +102,14 @@ const Checkbox = ({ checked, onChange, label }) => {
         checked={checked}
         onChange={onChange}
       />
-      {label}
+      <CheckboxLabel htmlFor="checkbox">{label}</CheckboxLabel>
     </FormControl>
   );
 };
+
+const CheckboxLabel = styled.label`
+  cursor: pointer;
+`;
 
 const FormControl = styled.label`
   font-size: 14px;
@@ -120,6 +120,7 @@ const FormControl = styled.label`
   gap: 0.75em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  cursor: pointer;
 
   input[type="checkbox"] {
     appearance: none;
@@ -170,6 +171,7 @@ const DropdownContainer = styled.div`
   justify-self: end;
   width: 100%;
   text-align: right;
+  cursor: pointer;
 `;
 
 const FilterButton = styled.a`
