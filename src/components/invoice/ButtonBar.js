@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
 import { DangerButton, PrimaryButton, SecondaryButton } from "../styled/Button";
 
-const ButtonBar = ({ modal, invoice }) => {
+const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
   const navigate = useNavigate();
   const [{}, dispatch] = useStateValue();
   const handlePaid = () => {
@@ -30,7 +30,7 @@ const ButtonBar = ({ modal, invoice }) => {
   };
 
   return (
-    <ButtonContainer>
+    <ButtonContainer marginTop={marginTop} padding={padding}>
       <SecondaryButton dark={false} onClick={() => modal.current.open()}>
         Edit
       </SecondaryButton>
@@ -58,8 +58,8 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   background-color: #ffffff;
   width: 100%;
-  padding: 2em;
-  margin-top: 5em;
+  padding: ${(props) => props.padding};
+  margin-top: ${(props) => props.marginTop};
 `;
 
 export default ButtonBar;
