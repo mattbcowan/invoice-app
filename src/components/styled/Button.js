@@ -27,7 +27,6 @@ const Button = styled.button`
 const PrimaryButton = styled(Button)`
   background: #7c5dfa;
   color: #ffffff;
-  max-width: 
 
   &:hover {
     background: #9277ff;
