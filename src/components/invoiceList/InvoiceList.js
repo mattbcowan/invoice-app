@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import Filter from "./Filter";
 import InvoiceListCard from "./InvoiceListCard";
 import styled from "styled-components";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { Button } from "../Button";
-import { IconContext } from "react-icons";
-import { Box, Grid } from "../Box";
-import { Body1, H1 } from "../Typography";
-import theme from "../../theme/theme";
+import { Body1 } from "../Typography";
 import { useStateValue } from "../../StateProvider";
-import { IconButton } from "../styled/Button";
+import { PrimaryButton } from "../styled/Button";
+import Container from "../styled/Container";
 
 const InvoiceList = ({ modal }) => {
-  const [{ invoices }, dispatch] = useStateValue();
+  const [{ invoices }] = useStateValue();
   const [invoiceQty, setInvoiceQty] = useState(0);
   const [filterStatus, setFilterStatus] = useState([
     {
@@ -52,32 +48,22 @@ const InvoiceList = ({ modal }) => {
   };
 
   useEffect(() => {
-    setInvoiceQty(getFilteredInvoices().length);
-  });
+    let invoices = getFilteredInvoices().length;
+    setInvoiceQty(invoices);
+  }, []);
 
   return (
     <Container>
       <ButtonsContainer>
         <div>
           <InvoiceHeader>Invoices</InvoiceHeader>
-          <Body1>{countInvoices(invoices.length)}</Body1>
+          <Body1>{countInvoices(invoiceQty)}</Body1>
         </div>
         <Filter filter={filterStatus} setFilter={setFilterStatus} />
-        <IconButton onClick={() => modal.current.open()}>
-          <IconContext.Provider
-            value={{
-              color: "#ffffff",
-              size: "32px",
-              style: { marginRight: "0.4em" },
-            }}
-          >
-            <AiFillPlusCircle />
-          </IconContext.Provider>
-          New
-        </IconButton>
+        <PrimaryButton onClick={() => modal.current.open()}>New</PrimaryButton>
       </ButtonsContainer>
       {invoices.length > 0 ? (
-        <Grid display="grid" gridTemplateColumns="1fr" gridGap={3}>
+        <Grid>
           {invoices
             .filter((invoice) => {
               let filters = filterStatus.map((value) => {
@@ -97,14 +83,10 @@ const InvoiceList = ({ modal }) => {
   );
 };
 
-const Container = styled.div`
-  max-width: 730px;
-  margin: 2em;
-
-  @media (min-width: 768px) {
-    margin: 0 auto;
-    margin-top: 2em;
-  }
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
 `;
 
 const ButtonsContainer = styled.div`
