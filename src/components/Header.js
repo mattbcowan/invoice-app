@@ -22,7 +22,7 @@ const Header = () => {
       bg={"#373B53"}
     >
       <div>
-        <img src="./logo.svg" alt="Header Logo" />
+        <img src="/logo.svg" alt="Header Logo" />
       </div>
       <div>
         <ProfileContainer>
