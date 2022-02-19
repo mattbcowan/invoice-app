@@ -12,8 +12,8 @@ const Button = styled.button`
   padding: 16px;
   transition: 250ms ease-out;
   &:hover {
-    background: ${(props) => (props.dark ? "#FFFFFF" : "#7E88C3")};
-    color: ${(props) => (props.dark ? "#DFE3FA" : "#7E88C3")};
+    background: ${(props) => (props.dark ? "#FFFFFF" : "#DFE3FA")};
+    color: ${(props) => (props.dark ? "#7E88C3" : "#7E88C3")};
     transition: 300ms ease-out;
   }
   ,
