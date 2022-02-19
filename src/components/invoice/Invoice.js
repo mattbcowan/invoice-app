@@ -5,110 +5,191 @@ import ShadowBox from "../ShadowBox";
 import ButtonBar from "./ButtonBar";
 import LineItemsBox from "./LineItemsBox";
 import BackButton from "../BackButton";
-import { Box, Grid } from "../Box";
 import { StatusTag } from "../StatusTag";
-import theme from "../../theme/theme";
 import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
-
-const LargeText = ({ children }) => {
-  return <span>{children}</span>;
-};
-
-const Header = ({ children, spacing }) => {
-  return <span>{children}</span>;
-};
-
-const Address = ({ children, spacing }) => {
-  return <span>{children}</span>;
-};
+import { Body1, H3 } from "../Typography";
+import Container from "../styled/Container";
+import useWindowSize from "../hooks/useWindowSize";
 
 const Invoice = ({ modal }) => {
   let { invoiceId } = useParams();
   const [{ invoices }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const invoice = invoices.find((x) => x.id === invoiceId);
+  const screenSize = useWindowSize();
 
   return (
-    <Box>
+    <div>
       {invoice && (
         <div>
-          <BackButton navigate={navigate} />
-          <ShadowBox
-            px={4}
-            py={4}
-            m={4}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Header spacing="0">Status</Header>
-            <StatusTag tagStatus={invoice.status.toLowerCase()}>
-              <GoPrimitiveDot /> {invoice.status}
-            </StatusTag>
-          </ShadowBox>
-          <ShadowBox p={4} m={4}>
-            <Grid display="grid" gridTemplateColumns="1fr 1fr" gridGap="1em">
-              <Box>
-                <span
-                  fontSize={theme.fontSizes.body}
-                  fontWeight={theme.fontWeights.bold}
-                  letterSpacing={theme.letterSpacing[1]}
-                  lineHeight={theme.lineHeights[0]}
-                  color={"black"}
-                  mb={1}
-                >
-                  <Hash>#</Hash>
-                  {invoiceId}
-                </span>
-                <Header>{invoice.bill_to_info.project_description}</Header>
-                <Address spacing={4}>
-                  {invoice.bill_from_info.street_name}
-                  <br />
-                  {invoice.bill_from_info.city} {invoice.bill_from_info.state}
-                  <br />
-                  {invoice.bill_from_info.zip_code}
-                  <br />
-                  {invoice.bill_from_info.country}
-                </Address>
-                <Box mb={5}>
-                  <Header>Invoice Date</Header>
-                  <LargeText>{invoice.bill_to_info.invoice_date}</LargeText>
-                </Box>
-                <Box mb={5}>
-                  <Header>Payment Due</Header>
-                  <LargeText>{invoice.bill_to_info.invoice_date}</LargeText>
-                </Box>
-                <Box mb={5}>
-                  <Header>Sent To</Header>
-                  <LargeText>{invoice.bill_to_info.client_email}</LargeText>
-                </Box>
-              </Box>
-              <Box mt={"9em"}>
-                <Header>Bill To</Header>
-                <LargeText>{invoice.bill_to_info.client_name}</LargeText>
-                <Address spacing={2}>
-                  {invoice.bill_to_info.street_name}
-                  <br />
-                  {invoice.bill_to_info.city} {invoice.bill_to_info.state}
-                  <br />
-                  {invoice.bill_to_info.zip_code}
-                  <br />
-                  {invoice.bill_to_info.country}
-                </Address>
-              </Box>
-            </Grid>
-            <LineItemsBox invoice={invoice} />
-          </ShadowBox>
-          <ButtonBar modal={modal} invoiceId={invoiceId} invoice={invoice} />
+          <Container>
+            <BackButton navigate={navigate} />
+            <ShadowBox marginBottom={"1em"} marginTop={"1em"}>
+              <StatusContainer>
+                <Body1>Status</Body1>
+                <StatusTag tagStatus={invoice.status.toLowerCase()}>
+                  <GoPrimitiveDot /> {invoice.status}
+                </StatusTag>
+                {screenSize.width > 480 && (
+                  <ButtonBar
+                    modal={modal}
+                    invoiceId={invoiceId}
+                    invoice={invoice}
+                  />
+                )}
+              </StatusContainer>
+            </ShadowBox>
+            <ShadowBox>
+              <Grid>
+                <InvoiceNumContainer>
+                  <InvoiceNumber>
+                    <Hash>#</Hash>
+                    {invoiceId}
+                  </InvoiceNumber>
+                  <Body1>{invoice.bill_to_info.project_description}</Body1>
+                </InvoiceNumContainer>
+                <BillFromContainer>
+                  <AddressLine>
+                    {invoice.bill_from_info.street_name}
+                  </AddressLine>
+                  <AddressLine>
+                    {invoice.bill_from_info.city} {invoice.bill_from_info.state}
+                  </AddressLine>
+                  <AddressLine>{invoice.bill_from_info.zip_code}</AddressLine>
+                  <AddressLine>{invoice.bill_from_info.country}</AddressLine>
+                </BillFromContainer>
+                <InvoiceDateContainer>
+                  <Label>Invoice Date</Label>
+                  <H3>{invoice.bill_to_info.invoice_date}</H3>
+                </InvoiceDateContainer>
+                <PaymentDueContainer>
+                  <Label>Payment Due</Label>
+                  <H3>{invoice.bill_to_info.invoice_date}</H3>
+                </PaymentDueContainer>
+                <SentToContainer>
+                  <Label>Sent To</Label>
+                  <H3>{invoice.bill_to_info.client_email}</H3>
+                </SentToContainer>
+                <BillToContainer>
+                  <Label>Bill To</Label>
+                  <H3>{invoice.bill_to_info.client_name}</H3>
+                  <AddressLine>{invoice.bill_to_info.street_name}</AddressLine>
+                  <AddressLine>
+                    {invoice.bill_to_info.city} {invoice.bill_to_info.state}
+                  </AddressLine>
+                  <AddressLine>{invoice.bill_to_info.zip_code}</AddressLine>
+                  <AddressLine>{invoice.bill_to_info.country}</AddressLine>
+                </BillToContainer>
+              </Grid>
+              <LineItemsBox invoice={invoice} />
+            </ShadowBox>
+          </Container>
+          {screenSize.width < 480 && (
+            <ButtonBar
+              modal={modal}
+              invoiceId={invoiceId}
+              invoice={invoice}
+              marginTop="5em"
+              padding="2em"
+            />
+          )}
         </div>
       )}
-    </Box>
+    </div>
   );
 };
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+  margin-bottom: 2em;
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const InvoiceNumContainer = styled.div`
+  grid-column: 1/3;
+
+  @media (min-width: 480px) {
+    grid-column: 1/2;
+  }
+`;
+
+const BillFromContainer = styled.div`
+  grid-column: 1/3;
+
+  @media (min-width: 480px) {
+    grid-column: 3/5;
+    text-align: right;
+  }
+`;
+
+const InvoiceDateContainer = styled.div`
+  grid-column: 1/2;
+
+  @media (min-width: 480px) {
+    grid-column: 1/2;
+  }
+`;
+
+const PaymentDueContainer = styled.div`
+  grid-column: 1/2;
+
+  @media (min-width: 480px) {
+    grid-column: 1/2;
+  }
+`;
+
+const SentToContainer = styled.div`
+  grid-column: 1/3;
+
+  @media (min-width: 480px) {
+    grid-column: 3/5;
+    grid-row: 2/3;
+  }
+`;
+
+const BillToContainer = styled.div`
+  grid-column: 2/3;
+  grid-row: 3/5;
+
+  @media (min-width: 480px) {
+    grid-column: 2/3;
+    grid-row: 2/4;
+  }
+`;
+
+const StatusContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 10% 20% 70%;
+    align-items: center;
+  }
+`;
+
+const InvoiceNumber = styled(Body1)`
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.black};
+  margin-bottom: 0.75em;
+`;
+
 const Hash = styled.span`
   color: #7e88c3;
+`;
+
+const AddressLine = styled(Body1)`
+  margin-bottom: 0.5em;
+`;
+
+const Label = styled(Body1)`
+  margin-bottom: 1em;
 `;
 
 export default Invoice;

@@ -7,6 +7,8 @@ import { DangerButton, PrimaryButton, SecondaryButton } from "../styled/Button";
 const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
   const navigate = useNavigate();
   const [{}, dispatch] = useStateValue();
+  const isDisabled = invoice.status === "Paid";
+
   const handlePaid = () => {
     dispatch({
       type: "UPDATE_INVOICE",
@@ -40,11 +42,7 @@ const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
       {invoice.status === "Draft" ? (
         <PrimaryButton onClick={handleSend}>Send Invoice</PrimaryButton>
       ) : (
-        <PrimaryButton
-          disabled={invoice.status === "Paid"}
-          onClick={handlePaid}
-          dark={false}
-        >
+        <PrimaryButton disabled={isDisabled} onClick={handlePaid}>
           Mark As Paid
         </PrimaryButton>
       )}
