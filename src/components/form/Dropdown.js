@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
+import { Body1 } from "../Typography";
 
 const Dropdown = ({
   register,
@@ -27,7 +28,7 @@ const Dropdown = ({
   return (
     <Container>
       <Hidden type="text" {...register(path)} value={value} />
-      <span>{label}</span>
+      <Body1>{label}</Body1>
       <Container>
         <Title type="button" onClick={toggleList}>
           <TitleContainer>
