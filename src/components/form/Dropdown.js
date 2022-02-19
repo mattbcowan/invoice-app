@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { layout, shadow, space } from "styled-system";
-import theme from "../../theme/theme";
-import { Box, Flexbox } from "../Box";
 import { BiChevronDown } from "react-icons/bi";
 
 const Dropdown = ({
@@ -11,7 +8,6 @@ const Dropdown = ({
   path,
   defaultValue,
   options,
-  width,
   value,
   setValue,
 }) => {
@@ -29,25 +25,22 @@ const Dropdown = ({
   };
 
   return (
-    <Box width={width}>
+    <Container>
       <Hidden type="text" {...register(path)} value={value} />
       <span>{label}</span>
-      <Box>
-        <Title width={"100%"} p={12} my={2} type="button" onClick={toggleList}>
-          <div>
-            <div>
-              {title} <BiChevronDown />
-            </div>
-          </div>
+      <Container>
+        <Title type="button" onClick={toggleList}>
+          <TitleContainer>
+            {title} <BiChevronDown />
+          </TitleContainer>
         </Title>
         {isOpen && (
-          <Wrapper mb={4}>
-            <Flexbox display="flex" flexDirection="column">
+          <Wrapper>
+            <Flexbox>
               {options.map((option, i) => {
                 return (
                   <Option
                     key={i}
-                    p={3}
                     type="button"
                     onClick={() => setSelection(option)}
                   >
@@ -58,66 +51,76 @@ const Dropdown = ({
             </Flexbox>
           </Wrapper>
         )}
-      </Box>
-    </Box>
+      </Container>
+    </Container>
   );
 };
 
-const Title = styled("button")(
-  {
-    boxSizing: "border-box",
-    fontSize: theme.fontSizes.body,
-    fontWeight: theme.fontWeights.bold,
-    letterSpacing: theme.letterSpacing.body,
-    lineHeight: theme.lineHeights[0],
-    borderRadius: theme.radii[1],
-    border: "1px solid #dfe3fa",
-    outline: "none",
-    background: "transparent",
-    textAlign: "left",
-    ":focus": {
-      borderColor: "#9277ff",
-    },
-  },
-  space,
-  layout
-);
+const Container = styled.div`
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+`;
 
-const Option = styled("button")(
-  {
-    boxSizing: "border-box",
-    fontSize: theme.fontSizes.body,
-    fontWeight: theme.fontWeights.bold,
-    letterSpacing: theme.letterSpacing.body,
-    lineHeight: theme.lineHeights[0],
-    border: "none",
-    borderBottom: `1px solid ${theme.colors.lightGray}`,
-    background: "transparent",
-    cursor: "pointer",
-    textAlign: "left",
-    ":last-child": {
-      borderBottom: "none",
-    },
-    ":hover": {
-      color: theme.colors.darkPurple,
-    },
-  },
-  space,
-  layout
-);
+const Wrapper = styled.div`
+  box-sizing: border-box;
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+  border-radius: ${({ theme }) => theme.radii[2]};
+  margin-bottom: 16px;
+`;
 
-const Wrapper = styled("div")(
-  {
-    boxSizing: "border-box",
-    background: "#ffffff",
-    boxShadow: "0px 10px 20px rgba(72, 84, 159, 0.25)",
-    borderRadius: theme.radii[2],
-  },
-  space,
-  layout,
-  shadow
-);
+const Flexbox = styled(Container)`
+  display: flex;
+  flex-direction: column;
+`;
 
-const Hidden = styled("input")({ display: "none" });
+const Title = styled.button`
+  box-sizing: border-box;
+    font-size: ${({ theme }) => theme.fontSizes.body1};
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+    letter-spacing: ${({ theme }) => theme.letterSpacing.body1};
+    line-height: ${({ theme }) => theme.lineHeights[0]};
+    border-radius: ${({ theme }) => theme.radii[1]};
+    border: 1px solid #dfe3fa;
+    outline: none;
+    background: transparent;
+    textAlign: left;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    &:focus {
+      border-color: #9277ff,
+    },
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Option = styled.button`
+box-sizing: border-box;
+    font-size: ${({ theme }) => theme.fontSizes.body1};
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+    letter-spacing: ${({ theme }) => theme.letterSpacing.body1};
+    line-height: ${({ theme }) => theme.lineHeights[0]};
+    border: none;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    padding: 16px;
+    &:last-child {
+      border-bottom: none;
+    },
+    &:hover {
+      color: ${({ theme }) => theme.colors.darkPurple};
+    },
+`;
+
+const Hidden = styled.input`
+  display: none;
+`;
 
 export default Dropdown;

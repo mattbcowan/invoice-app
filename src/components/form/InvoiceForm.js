@@ -5,14 +5,10 @@ import LineItems from "./LineItems";
 import { invoiceSchema } from "../../schema";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "../Button";
 import TextField from "./TextField";
 import Dropdown from "./Dropdown";
 import { useStateValue } from "../../StateProvider";
-
-const Header = ({ children }) => {
-  return <span>{children}</span>;
-};
+import { Button, PrimaryButton, SecondaryButton } from "../styled/Button";
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
@@ -81,31 +77,26 @@ const InvoiceForm = ({ modal }) => {
             <StyledFieldset>
               <StyledLegend>Bill From</StyledLegend>
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_from_info.street_name"}
                 label={"Street Address"}
               />
               <TextField
-                width={"50%"}
                 register={register}
                 path={"bill_from_info.city"}
                 label={"City"}
               />
               <TextField
-                width={"15%"}
                 register={register}
                 path={"bill_from_info.state"}
                 label={"State"}
               />
               <TextField
-                width={"25%"}
                 register={register}
                 path={"bill_from_info.zip_code"}
                 label={"Zip Code"}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_from_info.country"}
                 label={"Country"}
@@ -114,56 +105,47 @@ const InvoiceForm = ({ modal }) => {
             <StyledFieldset>
               <StyledLegend>Bill To</StyledLegend>
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.client_name"}
                 label={"Client's Name"}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.client_email"}
                 label={"Client's Email"}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.street_name"}
                 label={"Street Address"}
               />
               <TextField
-                width={"50%"}
                 register={register}
                 path={"bill_to_info.city"}
                 label={"City"}
               />
               <TextField
-                width={"15%"}
                 register={register}
                 path={"bill_to_info.state"}
                 label={"State"}
               />
               <TextField
-                width={"25%"}
                 register={register}
                 path={"bill_to_info.zip_code"}
                 label={"Zip Code"}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.country"}
                 label={"Country"}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.invoice_date"}
                 label={"Invoice Date"}
                 disabled={true}
               />
               <Dropdown
-                width={"100%"}
                 register={register}
                 label={"Payment Terms"}
                 path={"bill_to_info.payment_terms"}
@@ -177,7 +159,6 @@ const InvoiceForm = ({ modal }) => {
                 ]}
               />
               <TextField
-                width={"100%"}
                 register={register}
                 path={"bill_to_info.project_description"}
                 label={"Project Description"}
@@ -189,36 +170,23 @@ const InvoiceForm = ({ modal }) => {
           </FieldContainer>
           {isAddMode ? (
             <ButtonsContainer>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => modal.current.close()}
-              >
+              <Button type="button" onClick={() => modal.current.close()}>
                 Discard
               </Button>
-              <Button
+              <SecondaryButton
                 type="submit"
-                variant="tertiary"
                 onClick={() => setValue("status", "Draft")}
               >
                 Save as Draft
-              </Button>
-              <Button type="submit" variant="primary">
-                Save & Send
-              </Button>
+              </SecondaryButton>
+              <PrimaryButton type="submit">Save & Send</PrimaryButton>
             </ButtonsContainer>
           ) : (
             <ButtonsContainer>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => modal.current.close()}
-              >
+              <Button type="button" onClick={() => modal.current.close()}>
                 Cancel
               </Button>
-              <Button type="submit" variant="primary">
-                Save Changes
-              </Button>
+              <PrimaryButton type="submit">Save Changes</PrimaryButton>
             </ButtonsContainer>
           )}
         </form>
@@ -232,8 +200,16 @@ const Wrapper = styled.div`
   background: linear-gradient(to top, rgba(0, 0, 0, 10%) 5%, transparent 15%);
 `;
 
+const Header = styled.div`
+  font-size: 24px;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  line-height: 32px;
+  letter-spacing: -0.5px;
+  color: ${({ theme }) => theme.colors.black};
+`;
+
 const FieldContainer = styled.div`
-  margin: 1em;
+  margin: 2em;
 `;
 
 const StyledLegend = styled.legend`
@@ -248,6 +224,7 @@ const StyledFieldset = styled.fieldset`
   display: flex;
   flex-wrap: wrap;
   gap: 5%;
+  padding: 0;
 `;
 
 const ButtonsContainer = styled.div`

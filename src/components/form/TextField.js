@@ -1,42 +1,41 @@
 import React from "react";
 import styled from "styled-components";
-import { space, layout } from "styled-system";
-import theme from "../../theme/theme";
-import { Box } from "../Box";
+import { Body1 } from "../Typography";
 
-const TextField = ({ register, label, path, width, disabled, value }) => {
+const TextField = ({ register, label, path, disabled, value }) => {
   return (
-    <Box width={width} my={2}>
-      <span>{label}</span>
-      <Input
-        value={value}
-        disabled={disabled}
-        width={"100%"}
-        p={12}
-        my={2}
-        type="text"
-        {...register(path)}
-      />
-    </Box>
+    <TextFieldWrapper>
+      <Body1>
+        <label>{label}</label>
+      </Body1>
+      <Input value={value} disabled={disabled} {...register(path)} />
+    </TextFieldWrapper>
   );
 };
 
-const Input = styled("input")(
-  {
-    boxSizing: "border-box",
-    fontSize: theme.fontSizes.body,
-    fontWeight: theme.fontWeights.bold,
-    letterSpacing: theme.letterSpacing.body,
-    lineHeight: theme.lineHeights[0],
-    borderRadius: theme.radii[1],
-    border: "1px solid #dfe3fa",
-    outline: "none",
-    ":focus": {
-      borderColor: "#9277ff",
-    },
+const TextFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  box-sizing: border-box;
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
+  line-height: ${({ theme }) => theme.lineHeights.body1};
+  letter-spacing: ${({ theme }) => theme.letterSpacing[1]};
+  color: ${({ theme }) => theme.colors.grayBlue};
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: ${({ theme }) => theme.radii[1]};
+  border: 1px solid #dfe3fa;
+  outline: none;
+  transition: 300ms ease-in;
+  &:focus {
+    border-color: #9277ff;
+    transition: 300ms ease-out;
   },
-  space,
-  layout
-);
+`;
 
 export default TextField;
