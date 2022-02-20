@@ -34,6 +34,7 @@ const InvoiceForm = ({ modal }) => {
       line_items: [],
       bill_to_info: {
         invoice_date: invoiceDate.toDateString().slice(4),
+        payment_terms: "Net 30 Days",
       },
     },
   });
