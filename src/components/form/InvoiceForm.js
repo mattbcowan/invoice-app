@@ -9,6 +9,7 @@ import TextField from "./TextField";
 import Dropdown from "./Dropdown";
 import { useStateValue } from "../../StateProvider";
 import { Button, PrimaryButton, SecondaryButton } from "../styled/Button";
+import BackButton from "../BackButton";
 
 const InvoiceForm = ({ modal }) => {
   let location = useLocation();
@@ -65,6 +66,7 @@ const InvoiceForm = ({ modal }) => {
 
   return (
     <Wrapper>
+      <BackButton goBack={() => modal.current.close()} />
       {loading && <p>Loading...</p>}
       {
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiChevronLeft } from "react-icons/bi";
 
-const BackButton = ({ navigate }) => {
+const BackButton = ({ goBack }) => {
   return (
     <Wrapper>
-      <Button onClick={() => navigate(-1)}>
+      <Button onClick={goBack}>
         <IconContext.Provider value={{ color: "#7C5DFA", size: "2em" }}>
           <BiChevronLeft />
         </IconContext.Provider>

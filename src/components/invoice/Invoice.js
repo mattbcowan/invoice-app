@@ -24,7 +24,7 @@ const Invoice = ({ modal }) => {
       {invoice && (
         <div>
           <Container>
-            <BackButton navigate={navigate} />
+            <BackButton goBack={() => navigate(-1)} />
             <ShadowBox marginBottom={"1em"} marginTop={"1em"}>
               <StatusContainer>
                 <Body1>Status</Body1>
