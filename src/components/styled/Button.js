@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const Button = styled.button`
   background: ${(props) => (props.dark ? "#252945" : "#F9FAFE")};

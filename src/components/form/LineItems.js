@@ -105,17 +105,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const TotalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  grid-column: ${(props) => props.mobileGridCol};
-
-  @media (min-width: 480px) {
-    grid-column: ${(props) => props.desktopGridCol};
-  }
-`;
-
 const DeleteButton = styled.button`
   background: transparent;
   border: none;

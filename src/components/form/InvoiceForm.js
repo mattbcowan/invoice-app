@@ -231,8 +231,9 @@ const InvoiceForm = ({ modal }) => {
 
 const Wrapper = styled.div`
   width: 100vw;
+  padding-top: 2em;
   background: linear-gradient(to top, rgba(0, 0, 0, 10%) 5%, transparent 15%);
-
+  background-color: #ffffff;
   @media (min-width: 620px) {
     max-width: 620px;
   }
