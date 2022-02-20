@@ -11,17 +11,25 @@ const Button = styled.button`
   border-radius: 48px;
   padding: 16px;
   transition: 250ms ease-out;
+  width: ${(props) => props.width};
   &:hover {
     background: ${(props) => (props.dark ? "#FFFFFF" : "#DFE3FA")};
     color: ${(props) => (props.dark ? "#7E88C3" : "#7E88C3")};
     transition: 300ms ease-out;
   }
-  ,
+
   &:disabled {
-    background: "#F9FAFE";
-    color: "#7E88C3";
-    transition: "none";
-    cursor: "not-allowed";
+    background: #f9fafe;
+    color: #7e88c3;
+    transition: none;
+    cursor: not-allowed;
+  }
+
+  &:disabled:hover {
+    background: #f9fafe;
+    color: #7e88c3;
+    transition: none;
+    cursor: not-allowed;
   }
 `;
 
@@ -66,4 +74,21 @@ const DangerButton = styled(Button)`
   }
 `;
 
-export { Button, IconButton, PrimaryButton, SecondaryButton, DangerButton };
+const SignInWithGoogle = styled(Button)`
+  background: #2ecc71;
+  color: #ffffff;
+
+  &:hover {
+    background: #27ae60;
+    color: #ffffff;
+  }
+`;
+
+export {
+  Button,
+  IconButton,
+  PrimaryButton,
+  SecondaryButton,
+  DangerButton,
+  SignInWithGoogle,
+};
