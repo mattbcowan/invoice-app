@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 import { auth } from "../firebase";
 import { useStateValue } from "../StateProvider";
-import { Flexbox } from "./Box";
 
 const Header = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -15,12 +14,7 @@ const Header = () => {
   };
 
   return (
-    <Flexbox
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      bg={"#373B53"}
-    >
+    <Wrapper>
       <div>
         <img src="/logo.svg" alt="Header Logo" />
       </div>
@@ -33,9 +27,16 @@ const Header = () => {
           />
         </ProfileContainer>
       </div>
-    </Flexbox>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #373b53;
+`;
 
 const ProfileImg = styled("img")({
   objectFit: "contain",
