@@ -11,6 +11,7 @@ const Dropdown = ({
   options,
   value,
   setValue,
+  ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(defaultValue);
@@ -26,7 +27,10 @@ const Dropdown = ({
   };
 
   return (
-    <Container>
+    <Container
+      mobileGridCol={props.mobileGridCol}
+      desktopGridCol={props.desktopGridCol}
+    >
       <Hidden type="text" {...register(path)} value={value} />
       <Body1>{label}</Body1>
       <Container>
@@ -61,6 +65,12 @@ const Container = styled.div`
   box-sizing: border-box;
   min-width: 0;
   width: 100%;
+
+  grid-column: ${(props) => props.mobileGridCol};
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+  }
 `;
 
 const Wrapper = styled.div`

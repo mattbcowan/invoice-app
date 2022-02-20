@@ -5,16 +5,20 @@ import { LineItemTotal } from "./LineItemTotal";
 import { Button } from "../Button";
 import styled from "styled-components";
 import TextField from "./TextField";
+import { H3 } from "../Typography";
 
-const LineItems = ({ control, register, setValue }) => {
+const LineItems = ({ control, register, setValue, ...props }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "line_items",
   });
 
   return (
-    <Wrapper>
-      <h3>Item List</h3>
+    <Wrapper
+      mobileGridCol={props.mobileGridCol}
+      desktopGridCol={props.desktopGridCol}
+    >
+      <H3>Item List</H3>
       <div>
         <StyledList>
           {fields.map((item, index) => (
@@ -88,6 +92,12 @@ const Grid = styled.div`
 const Wrapper = styled.div`
   margin-bottom: 5em;
   width: 100%;
+
+  grid-column: ${(props) => props.mobileGridCol};
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+  }
 `;
 
 const DeleteButton = styled.button`

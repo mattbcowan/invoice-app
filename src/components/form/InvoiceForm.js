@@ -82,26 +82,36 @@ const InvoiceForm = ({ modal }) => {
                 register={register}
                 path={"bill_from_info.street_name"}
                 label={"Street Address"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <TextField
                 register={register}
                 path={"bill_from_info.city"}
                 label={"City"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/3"}
               />
               <TextField
                 register={register}
                 path={"bill_from_info.state"}
                 label={"State"}
+                mobileGridCol={"1/2"}
+                desktopGridCol={"3/5"}
               />
               <TextField
                 register={register}
                 path={"bill_from_info.zip_code"}
                 label={"Zip Code"}
+                mobileGridCol={"2/3"}
+                desktopGridCol={"5/7"}
               />
               <TextField
                 register={register}
                 path={"bill_from_info.country"}
                 label={"Country"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
             </StyledFieldset>
             <StyledFieldset>
@@ -110,42 +120,58 @@ const InvoiceForm = ({ modal }) => {
                 register={register}
                 path={"bill_to_info.client_name"}
                 label={"Client's Name"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.client_email"}
                 label={"Client's Email"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.street_name"}
                 label={"Street Address"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.city"}
                 label={"City"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/3"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.state"}
                 label={"State"}
+                mobileGridCol={"1/2"}
+                desktopGridCol={"3/5"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.zip_code"}
                 label={"Zip Code"}
+                mobileGridCol={"2/3"}
+                desktopGridCol={"5/7"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.country"}
                 label={"Country"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <TextField
                 register={register}
                 path={"bill_to_info.invoice_date"}
                 label={"Invoice Date"}
                 disabled={true}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/4"}
               />
               <Dropdown
                 register={register}
@@ -153,6 +179,8 @@ const InvoiceForm = ({ modal }) => {
                 path={"bill_to_info.payment_terms"}
                 defaultValue="Net 30 Days"
                 setValue={setValue}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"4/7"}
                 options={[
                   "Net 1 Day",
                   "Net 7 Days",
@@ -164,9 +192,13 @@ const InvoiceForm = ({ modal }) => {
                 register={register}
                 path={"bill_to_info.project_description"}
                 label={"Project Description"}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
               <LineItems
                 {...{ control, watch, register, getValues, setValue, errors }}
+                mobileGridCol={"1/3"}
+                desktopGridCol={"1/7"}
               />
             </StyledFieldset>
           </FieldContainer>
@@ -219,14 +251,21 @@ const StyledLegend = styled.legend`
   line-height: 15px;
   letter-spacing: -0.25px;
   color: #7c5dfa;
+  grid-column: 1/3;
+  margin-top: 2em;
+  margin-bottom: 1em;
 `;
 
 const StyledFieldset = styled.fieldset`
   border: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5%;
   padding: 0;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
 `;
 
 const ButtonsContainer = styled.div`

@@ -2,9 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Body1 } from "../Typography";
 
-const TextField = ({ register, label, path, disabled, value }) => {
+const TextField = ({ register, label, path, disabled, value, ...props }) => {
   return (
-    <TextFieldWrapper>
+    <TextFieldWrapper
+      mobileGridCol={props.mobileGridCol}
+      mobileGridRow={props.mobileGridRow}
+      desktopGridCol={props.desktopGridCol}
+      desktopGridRow={props.desktopGridRow}
+    >
       <Body1>
         <label>{label}</label>
       </Body1>
@@ -14,9 +19,14 @@ const TextField = ({ register, label, path, disabled, value }) => {
 };
 
 const TextFieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  grid-column: ${(props) => props.mobileGridCol};
+  grid-row: ${(props) => props.mobileGridRow};
   width: 100%;
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+    grid-row: ${(props) => props.desktopGridRow};
+  }
 `;
 
 const Input = styled.input`
@@ -31,6 +41,7 @@ const Input = styled.input`
   border-radius: ${({ theme }) => theme.radii[1]};
   border: 1px solid #dfe3fa;
   outline: none;
+  width: 100%;
   transition: 300ms ease-in;
   &:focus {
     border-color: #9277ff;
