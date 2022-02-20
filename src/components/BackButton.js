@@ -24,9 +24,7 @@ const BackText = styled.span`
   color: #0c0e16;
 `;
 
-const Wrapper = styled.div`
-  margin-top: 1em;
-`;
+const Wrapper = styled.div``;
 
 const Button = styled.button`
   background: none;
