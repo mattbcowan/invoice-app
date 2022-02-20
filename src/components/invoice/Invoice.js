@@ -19,6 +19,14 @@ const Invoice = ({ modal, deleteAlert }) => {
   const invoice = invoices.find((x) => x.id === invoiceId);
   const screenSize = useWindowSize();
 
+  const getInvoiceDueDate = (invoiceDate, terms) => {
+    const daysToAdd = parseInt(terms.slice(4, 6));
+    const currentDate = new Date(invoiceDate.toString());
+    const dueDate = new Date();
+    dueDate.setDate(currentDate.getDate() + daysToAdd);
+    return dueDate.toDateString().slice(4);
+  };
+
   return (
     <div>
       {invoice && (
@@ -66,7 +74,12 @@ const Invoice = ({ modal, deleteAlert }) => {
                 </InvoiceDateContainer>
                 <PaymentDueContainer>
                   <Label>Payment Due</Label>
-                  <H3>{invoice.bill_to_info.invoice_date}</H3>
+                  <H3>
+                    {getInvoiceDueDate(
+                      invoice.bill_to_info.invoice_date,
+                      invoice.bill_to_info.payment_terms
+                    )}
+                  </H3>
                 </PaymentDueContainer>
                 <SentToContainer>
                   <Label>Sent To</Label>
