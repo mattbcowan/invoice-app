@@ -14,11 +14,13 @@ import Header from "./components/Header";
 import { auth, db } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { child, get, ref } from "firebase/database";
+import DeleteAlert from "./components/DeleteAlert";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const modal = useRef(null);
+  const deleteAlert = useRef(null);
   const [{}, dispatch] = useStateValue();
 
   const fetchInvoices = (userId) => {
@@ -91,7 +93,7 @@ function App() {
                     <>
                       <Header />
                       <PrivateRoute>
-                        <Invoice modal={modal} />
+                        <Invoice modal={modal} deleteAlert={deleteAlert} />
                       </PrivateRoute>
                     </>
                   }
@@ -101,6 +103,9 @@ function App() {
           </AppContainer>
           <Modal ref={modal}>
             <InvoiceForm modal={modal} />
+          </Modal>
+          <Modal ref={deleteAlert}>
+            <DeleteAlert modal={deleteAlert} />
           </Modal>
         </ThemeProvider>
       </ErrorBoundary>

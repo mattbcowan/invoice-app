@@ -12,7 +12,7 @@ import { Body1, H3 } from "../Typography";
 import Container from "../styled/Container";
 import useWindowSize from "../hooks/useWindowSize";
 
-const Invoice = ({ modal }) => {
+const Invoice = ({ modal, deleteAlert }) => {
   let { invoiceId } = useParams();
   const [{ invoices }, dispatch] = useStateValue();
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const Invoice = ({ modal }) => {
                 {screenSize.width > 480 && (
                   <ButtonBar
                     modal={modal}
+                    deleteAlert={deleteAlert}
                     invoiceId={invoiceId}
                     invoice={invoice}
                   />
@@ -89,6 +90,7 @@ const Invoice = ({ modal }) => {
             <ButtonBar
               modal={modal}
               invoiceId={invoiceId}
+              deleteAlert={deleteAlert}
               invoice={invoice}
               marginTop="5em"
               padding="2em"

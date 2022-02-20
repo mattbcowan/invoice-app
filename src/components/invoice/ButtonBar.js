@@ -1,11 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
 import { DangerButton, PrimaryButton, SecondaryButton } from "../styled/Button";
 
-const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
-  const navigate = useNavigate();
+const ButtonBar = ({ modal, deleteAlert, invoice, marginTop, padding }) => {
   const [{}, dispatch] = useStateValue();
   const isDisabled = invoice.status === "Paid";
 
@@ -14,14 +12,6 @@ const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
       type: "UPDATE_INVOICE",
       invoice: { ...invoice, status: "Paid" },
     });
-  };
-
-  const handleDelete = () => {
-    dispatch({
-      type: "UPDATE_INVOICE",
-      invoice: { ...invoice, status: "Delete" },
-    });
-    navigate("/invoices");
   };
 
   const handleSend = () => {
@@ -36,7 +26,7 @@ const ButtonBar = ({ modal, invoice, marginTop, padding }) => {
       <SecondaryButton dark={false} onClick={() => modal.current.open()}>
         Edit
       </SecondaryButton>
-      <DangerButton dark={false} onClick={handleDelete}>
+      <DangerButton dark={false} onClick={() => deleteAlert.current.open()}>
         Delete
       </DangerButton>
       {invoice.status === "Draft" ? (
