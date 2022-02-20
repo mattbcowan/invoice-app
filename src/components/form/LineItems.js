@@ -2,7 +2,7 @@ import React from "react";
 import { useFieldArray } from "react-hook-form";
 import { FaTrash } from "react-icons/fa";
 import { LineItemTotal } from "./LineItemTotal";
-import { Button } from "../Button";
+import { Button } from "../styled/Button";
 import styled from "styled-components";
 import TextField from "./TextField";
 import { H3 } from "../Typography";
@@ -65,12 +65,7 @@ const LineItems = ({ control, register, setValue, ...props }) => {
             </li>
           ))}
         </StyledList>
-        <Button
-          width={"100%"}
-          variant="secondary"
-          type="button"
-          onClick={() => append()}
-        >
+        <Button width="100%" type="button" onClick={() => append()}>
           + Add New Item
         </Button>
       </div>
