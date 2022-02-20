@@ -1,11 +1,21 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
 import { DangerButton, PrimaryButton, SecondaryButton } from "../styled/Button";
 
 const ButtonBar = ({ modal, deleteAlert, invoice, marginTop, padding }) => {
   const [{}, dispatch] = useStateValue();
-  const isDisabled = invoice.status === "Paid";
+  const [isDisabled, setIsDisabled] = useState(null);
+
+  useEffect(() => {
+    if (invoice.status === "Paid") {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, []);
 
   const handlePaid = () => {
     dispatch({
@@ -23,7 +33,11 @@ const ButtonBar = ({ modal, deleteAlert, invoice, marginTop, padding }) => {
 
   return (
     <ButtonContainer marginTop={marginTop} padding={padding}>
-      <SecondaryButton dark={false} onClick={() => modal.current.open()}>
+      <SecondaryButton
+        disabled={isDisabled}
+        dark={false}
+        onClick={() => modal.current.open()}
+      >
         Edit
       </SecondaryButton>
       <DangerButton dark={false} onClick={() => deleteAlert.current.open()}>
