@@ -24,30 +24,40 @@ const LineItems = ({ control, register, setValue, ...props }) => {
           {fields.map((item, index) => (
             <li key={item.id}>
               <StyledFieldset>
-                <TextField
-                  register={register}
-                  label="Item Name"
-                  path={`line_items.${index}.name`}
-                />
                 <Grid>
+                  <TextField
+                    register={register}
+                    label="Item Name"
+                    path={`line_items.${index}.name`}
+                    mobileGridCol="1/13"
+                    desktopGridCol="1/6"
+                  />
                   <TextField
                     register={register}
                     label="Qty."
                     path={`line_items.${index}.quantity`}
+                    mobileGridCol="1/4"
+                    desktopGridCol="6/8"
                   />
                   <TextField
                     register={register}
                     label="Price"
                     path={`line_items.${index}.price`}
+                    mobileGridCol="4/9"
+                    desktopGridCol="8/10"
                   />
-                  <TotalWrapper>
-                    <LineItemTotal
-                      control={control}
-                      index={index}
-                      setValue={setValue}
-                    />
-                  </TotalWrapper>
-                  <DeleteButton onClick={() => remove(index)}>
+                  <LineItemTotal
+                    control={control}
+                    index={index}
+                    setValue={setValue}
+                    mobileGridCol="9/12"
+                    desktopGridCol="10/12"
+                  />
+                  <DeleteButton
+                    onClick={() => remove(index)}
+                    mobileGridCol="12/13"
+                    desktopGridCol="12/13"
+                  >
                     <FaTrash />
                   </DeleteButton>
                 </Grid>
@@ -77,21 +87,27 @@ const StyledFieldset = styled.fieldset`
   border: none;
 `;
 
-const TotalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Grid = styled.div`
   max-width: 100%;
   display: grid;
   gap: 1em;
-  grid-template-columns: 20% 30% 25% 25%;
+  grid-template-columns: repeat(12, 1fr);
 `;
 
 const Wrapper = styled.div`
   margin-bottom: 5em;
   width: 100%;
+
+  grid-column: ${(props) => props.mobileGridCol};
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+  }
+`;
+
+const TotalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 
   grid-column: ${(props) => props.mobileGridCol};
 
@@ -108,6 +124,11 @@ const DeleteButton = styled.button`
   display: flex;
   margin-top: 1.75em;
   align-items: center;
+  grid-column: ${(props) => props.mobileGridCol};
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+  }
 `;
 
 export default LineItems;

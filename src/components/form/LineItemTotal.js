@@ -10,7 +10,7 @@ const totalCal = (results) => {
   return totalValue;
 };
 
-export const LineItemTotal = ({ control, index, setValue }) => {
+export const LineItemTotal = ({ control, index, setValue, ...props }) => {
   const results = useWatch({
     control,
     name: [`line_items.${index}.quantity`, `line_items.${index}.price`],
@@ -19,7 +19,10 @@ export const LineItemTotal = ({ control, index, setValue }) => {
   setValue(`line_items.${index}.total`, output);
 
   return (
-    <Wrapper>
+    <Wrapper
+      mobileGridCol={props.obileGridCol}
+      desktopGridCol={props.desktopGridCol}
+    >
       <StyledLabel>Total</StyledLabel>
       <Total>
         {output ? <Currency value={output} /> : <Currency value={0} />}
@@ -31,7 +34,11 @@ export const LineItemTotal = ({ control, index, setValue }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 0.6em;
+  grid-column: ${(props) => props.mobileGridCol};
+
+  @media (min-width: 480px) {
+    grid-column: ${(props) => props.desktopGridCol};
+  }
 `;
 
 const StyledLabel = styled.label`
@@ -39,6 +46,7 @@ const StyledLabel = styled.label`
   line-height: 15px;
   letter-spacing: -0.25px;
   color: #7e88c3;
+  margin-bottom: 0.3em;
 `;
 
 const Total = styled.div`
